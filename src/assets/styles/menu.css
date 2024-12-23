@@ -123,16 +123,18 @@
     .list-buttons {
         display: none;
         flex-direction: column;
-        width: 100%;
-        background-color: #ffffff;
+        width: 90%;
+        height: auto;
+        background-color: #f8edfd;
         /* Fondo blanco */
-        border-top: 1px solid var(--primary-color);
+        border-top: 1px solid var(--secondary-color);
         /* Opcional para separar */
         position: absolute;
         top: 90px;
         /* Ajusta según la altura del menú */
-        margin-right: 155px;
+        margin-right: 185px;
         z-index: 10;
+        border-bottom-right-radius: 15px;
     }
 
     .list-buttons.active {
@@ -141,8 +143,9 @@
 
     .list-buttons li {
         width: 100%;
-        text-align: left;
-        padding: 10px 15px;
+        padding: 1px 1px;
+        align-items: center;
+        text-align: center;
     }
 
     .list-buttons li a {
@@ -151,10 +154,12 @@
         display: block;
         color: var(--primary-color);
         text-decoration: none;
+        font-size: 15px;
     }
 
     .list-buttons li a:hover {
         background-color: var(--secondary-color);
         color: var(--background-color);
+        border-bottom-right-radius: 15px;
     }
 }
