@@ -2,7 +2,7 @@
     --primary-color: #514bf3;
     --secondary-color: #e7c13c;
     --background-color: white;
-    --background-color-two: #f8edfd;
+    --background-color-two: #6c6a6d;
     --text-color: black;
 }
 
@@ -160,16 +160,17 @@ body {
         flex-direction: column;
         width: 185%;
         height: auto;
-        background-color: #000000dd;
-        /* Fondo blanco */
+        background-color: var(--background-color-two);
         border-top: 1px solid var(--secondary-color);
-        /* Opcional para separar */
         position: absolute;
         top: 90px;
-        /* Ajusta según la altura del menú */
         margin-right: 185px;
         z-index: 10;
         border-bottom-right-radius: 15px;
+    }
+
+    body.dark-mode .list-buttons {
+        background-color: #000000dd;
     }
 
     .list-buttons.active {
