@@ -1,4 +1,5 @@
 import React from 'react';
+import '../assets/styles/menu.css';
 
 const MenuDesktop = ({ logo }) => {
     return (

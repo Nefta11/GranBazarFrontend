@@ -1,21 +1,22 @@
 import React from 'react';
-import '../assets/styles/main-view.css'; // Importa el archivo CSS
-import logoGranBazar from '../assets/images/logo_gran_bazar.jpeg'; // Importa la imagen
+import '../assets/styles/main-view.css';
+import logoGranBazar from '../assets/images/logo_gran_bazar.jpeg'; 
 import MenuDesktop from '../components/MenuDesktop';
 import MenuMobile from '../components/MenuMobile';
 import NavBar from '../components/NavBar';
-import Footer from '../components/Footer'; // Importa el nuevo componente Footer
+import Footer from '../components/Footer'; 
 
 const Home = () => {
     return (
         <div>
             <header>
-                <MenuDesktop logo={logoGranBazar} />
-                <MenuMobile logo={logoGranBazar} />
-                <NavBar />
-                <div className="nav-menu">
-                    {/* Aquí puedes agregar los enlaces de navegación */}
+                <div className="menu-desktop">
+                    <MenuDesktop logo={logoGranBazar} />
                 </div>
+                <div className="menu-mobile">
+                    <MenuMobile logo={logoGranBazar} />
+                </div>
+                <NavBar />
             </header>
             <main>
                 <h1 className="title-section">Ofertas de HASTA un 80%</h1>
