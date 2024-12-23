@@ -10,12 +10,8 @@ const Home = () => {
     return (
         <div>
             <header>
-                <div className="menu-desktop">
                     <MenuDesktop logo={logoGranBazar} />
-                </div>
-                <div className="menu-mobile">
                     <MenuMobile logo={logoGranBazar} />
-                </div>
                 <NavBar />
             </header>
             <main>
