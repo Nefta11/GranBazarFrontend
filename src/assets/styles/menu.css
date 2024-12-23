@@ -7,13 +7,6 @@
     height: 90px;
 }
 
-.container-logo,
-.menu-mobile__item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: inherit;
-}
 
 .container-logo h2 {
     margin: 0;
@@ -27,7 +20,7 @@
 .container-logo img {/* Logo escritorio*/
     width: 80px;
     height: 80px;
-    margin-left: 10px;
+    margin-left: 80px;
 }
 
 .container-buttons {
@@ -55,8 +48,9 @@
 }
 
 .title-app {
-    font-size: 3.6rem;
+    font-size:45px;
     position: absolute;
+    color: var(--primary-color);
     bottom: calc(50% - 25px);
     left: -100px;
 }
@@ -104,10 +98,11 @@
     .container-logo img {
         width: 55px;
         height: 55px;
+        margin-right: -10px;
     }
 
     .container-logo h2 {
-        font-size: 1.6rem;
+        font-size: 20px;
         margin: 0;
         color: var(--primary-color);
     }

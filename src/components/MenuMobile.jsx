@@ -12,7 +12,7 @@ const MenuMobile = ({ logo }) => {
     return (
         <div className="menu-mobile">
             <button className="btn-mobile-menu" onClick={toggleMenu}><FaBars /></button>
-            <div className="container-logo menu-mobile__item">
+            <div className="container-logo">
                 <img src={logo} alt="logo app" />
                 <h2>Gran Bazar</h2>
             </div>
