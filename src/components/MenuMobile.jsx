@@ -24,7 +24,7 @@ const MenuMobile = ({ logo }) => {
             </div>
             <div className="container-buttons">
                 <ul className={`list-buttons ${menuActive ? 'active' : ''}`}>
-                    <li><a href="/"><FaHome /> Home</a></li>
+                    <li><a href="/login"><FaHome /> Home</a></li>
                     <li><a href="/"><FaFemale /> Mujeres</a></li>
                     <li><a href="/"><FaMale /> Hombres</a></li>
                     <li><a href="/"><FaChild /> Niñas</a></li>
