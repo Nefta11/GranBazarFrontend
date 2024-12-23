@@ -5,10 +5,13 @@ const Login = () => {
     return (
         <div className="login-container">
             <div className="login-left">
-                <h1 className="login-title">Blockchain</h1>
-                <h2 className="login-subtitle">Revolution in Advertising</h2>
-                <p className="login-features">LOW FEES · CENSORSHIP RESISTANT · AI READY</p>
+                <div className="login-overlay">
+                    <h1 className="login-title">Blockchain</h1>
+                    <h2 className="login-subtitle">Revolution in Advertising</h2>
+                    <p className="login-features">LOW FEES · CENSORSHIP RESISTANT · AI READY</p>
+                </div>
             </div>
+
             <div className="login-right">
                 <h2 className="login-welcome">Hello!</h2>
                 <p className="login-description">
