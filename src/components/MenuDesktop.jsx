@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../assets/styles/menu.css';
-import { FaHome, FaFemale, FaChild, FaMale, FaBars } from 'react-icons/fa'; 
+import { FaHome, FaFemale, FaChild, FaMale, FaBars, FaUser } from 'react-icons/fa';
 
 const MenuDesktop = ({ logo }) => {
     const [menuActive, setMenuActive] = useState(false);
@@ -22,14 +22,8 @@ const MenuDesktop = ({ logo }) => {
                     <li><a href="/"><FaHome /> Home</a></li>
                     <li><a href="/"><FaFemale /> Mujeres</a></li>
                     <li><a href="/"><FaMale /> Hombres</a></li>
-                    <li><a href="/"><FaChild /> Niñas</a></li>
-                    <li><a href="/" id="cart-link"><i className="bx bxs-cart-alt card-icon"></i></a></li>
-                    <li className="dropdown">
-                        <i className='bx bx-user card-icon'></i>
-                        <div className="dropdown-content">
-                            {/* Aquí puedes agregar la lógica de autenticación */}
-                        </div>
-                    </li>
+                    <li><a href="/"><FaChild /> Niñ@s</a></li>
+                    <li><a href="/"><FaUser/> Mi Perfil</a></li>
                 </ul>
                 <button className="btn-mobile-menu" onClick={toggleMenu}><FaBars /></button>
             </div>
