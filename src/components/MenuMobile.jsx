@@ -28,7 +28,7 @@ const MenuMobile = ({ logo }) => {
                     <li><a href="/"><FaFemale /> Mujeres</a></li>
                     <li><a href="/"><FaMale /> Hombres</a></li>
                     <li><a href="/"><FaChild /> Niñas</a></li>
-                    <li><button className="btn-dark-mode" onClick={toggleDarkMode}>
+                    <li><button className="btn-dark-mode2 " onClick={toggleDarkMode}>
                         {darkMode ? <FaSun /> : <FaMoon />}
                     </button></li>
                 </ul>

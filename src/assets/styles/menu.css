@@ -97,6 +97,13 @@ body {
     color: var(--text-color);
 }
 
+.btn-dark-mode2 {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--primary-color);
+}
+
 @media (min-width: 1024px) {
     .menu-desktop {
         display: flex;
@@ -184,6 +191,12 @@ body {
     }
 
     .list-buttons li a:hover {
+        background-color: var(--secondary-color);
+        color: var(--background-color);
+        border-bottom-right-radius: 15px;
+    }
+
+    .btn-dark-mode2 li button:hover{
         background-color: var(--secondary-color);
         color: var(--background-color);
         border-bottom-right-radius: 15px;
