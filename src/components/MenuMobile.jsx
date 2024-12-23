@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../assets/styles/menu.css';
-import { FaHome, FaFemale, FaChild, FaMale, FaBars, FaUser, FaMoon, FaSun } from 'react-icons/fa'; 
+import { FaHome, FaFemale, FaChild, FaMale, FaBars, FaUser, FaMoon, FaSun } from 'react-icons/fa';
 
 const MenuMobile = ({ logo }) => {
     const [menuActive, setMenuActive] = useState(false);
@@ -28,9 +28,12 @@ const MenuMobile = ({ logo }) => {
                     <li><a href="/"><FaFemale /> Mujeres</a></li>
                     <li><a href="/"><FaMale /> Hombres</a></li>
                     <li><a href="/"><FaChild /> Niñas</a></li>
-                    <li><button className="btn-dark-mode2 " onClick={toggleDarkMode}>
-                        {darkMode ? <FaSun /> : <FaMoon />}
-                    </button></li>
+                    <li>
+                        <a className="btn-dark-mode2" onClick={toggleDarkMode}>
+                            {darkMode ? <><FaSun /> Claro</> : <><FaMoon /> Oscuro</>}
+                        </a>
+                    </li>
+
                 </ul>
             </div>
             <a href="/">
