@@ -118,7 +118,7 @@
     .list-buttons {
         display: none;
         flex-direction: column;
-        width: 90%;
+        width: 185%;
         height: auto;
         background-color: #f8edfd;
         /* Fondo blanco */
