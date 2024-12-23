@@ -23,13 +23,13 @@ const MenuDesktop = ({ logo }) => {
 
     return (
         <div className="menu-desktop">
+            <button className="btn-dark-mode" onClick={toggleDarkMode}>
+                {darkMode ? <FaSun /> : <FaMoon />}
+            </button>
             <div className="container-logo">
                 <a href="/">
                     <img src={logo} alt="icono gran bazar" />
                 </a>
-                <button className="btn-dark-mode" onClick={toggleDarkMode}>
-                    {darkMode ? <FaSun /> : <FaMoon />}
-                </button>
             </div>
             <div className="container-buttons">
                 <h1 className="title-app">Gran Bazar</h1>
@@ -38,7 +38,7 @@ const MenuDesktop = ({ logo }) => {
                     <li><a href="/"><FaFemale /> Mujeres</a></li>
                     <li><a href="/"><FaMale /> Hombres</a></li>
                     <li><a href="/"><FaChild /> Niñ@s</a></li>
-                    <li><a href="/"><FaUser/> Mi Perfil</a></li>
+                    <li><a href="/"><FaUser /> Mi Perfil</a></li>
                 </ul>
                 <button className="btn-mobile-menu" onClick={toggleMenu}><FaBars /></button>
             </div>
