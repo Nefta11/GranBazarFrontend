@@ -97,6 +97,14 @@ li i, .menu-mobile__item i {
     font-size: 35px;
 }
 
+.btn-mobile-menu {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 2.4rem;
+    cursor: pointer;
+}
+
 @media (min-width: 1024px) {
     .menu-desktop {
         display: flex;
@@ -107,6 +115,32 @@ li i, .menu-mobile__item i {
 }
 
 @media (max-width: 1023px) {
+    .menu-desktop {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .btn-mobile-menu {
+        display: block;
+    }
+    .list-buttons {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+    }
+    .list-buttons.active {
+        display: flex;
+    }
+    .list-buttons li {
+        width: 100%;
+        text-align: left;
+        padding: 10px 0;
+    }
+    .list-buttons li a {
+        width: 100%;
+        padding: 10px;
+        display: block;
+    }
     .menu-desktop {
         display: none;
     }
