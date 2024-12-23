@@ -1,3 +1,24 @@
+:root {
+    --primary-color: #514bf3;
+    --secondary-color: #e7c13c;
+    --background-color: white;
+    --background-color-two: #f8edfd;
+    --text-color: black;
+}
+
+body.dark-mode {
+    --primary-color: #e7c13c;
+    --secondary-color: #514bf3;
+    --background-color: #1e1e1e;
+    --background-color-two: #2e2e2e;
+    --text-color: white;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
 .menu-desktop,
 .menu-mobile {
     display: none;
@@ -73,7 +94,7 @@
     font-size: 25px;
     color: var(--primary-color);
     margin-left: 35px;
-
+    color: var(--text-color);
 }
 
 @media (min-width: 1024px) {
