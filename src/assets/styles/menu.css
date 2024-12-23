@@ -160,7 +160,7 @@ body {
         flex-direction: column;
         width: 185%;
         height: auto;
-        background-color: #f8edfd;
+        background-color: #000000dd;
         /* Fondo blanco */
         border-top: 1px solid var(--secondary-color);
         /* Opcional para separar */
