@@ -1,5 +1,6 @@
 import React from 'react';
 import '../assets/styles/main-view.css'; // Importa el archivo CSS
+import logoGranBazar from '../assets/images/logo_gran_bazar.jpeg'; // Importa la imagen
 
 const Home = () => {
     return (
@@ -7,8 +8,8 @@ const Home = () => {
             <header>
                 <div className="menu-desktop">
                     <div className="container-logo">
-                        <a href="index.php">
-                            <img src="../assets/images/logo_gran_bazar.jpeg" alt="icono gran bazar" />
+                        <a href="/">
+                            <img src={logoGranBazar} alt="icono gran bazar" />
                         </a>
                     </div>
                     <div className="container-buttons">
@@ -33,7 +34,7 @@ const Home = () => {
                     </div>
                     <div className="container-logo menu-mobile__item">
                         <a href="index.php">
-                            <img src="../assets/images/logo_gran_bazar.jpeg" alt="logo app" />
+                            <img src={logoGranBazar} alt="logo app" />
                         </a>
                     </div>
                     <div className="container-shopping-cart menu-mobile__item" id="mobile-cart-icon">
