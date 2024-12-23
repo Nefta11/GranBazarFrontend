@@ -89,14 +89,6 @@ const Home = () => {
                     </div>
                 </section>
                 <section className="footer-mobile">
-                    <div className="footer-item__desktop two">
-                        <p>Encuentranos en nuestras redes sociales</p>
-                        <div className="icons-footer-content">
-                            <i className='bx bxl-facebook-square'></i> <br />
-                            <i className='bx bxl-instagram-alt'></i> <br />
-                            <i className='bx bxl-tiktok'></i>
-                        </div>
-                    </div>
                     <p className="texto-footer-mobile">Visitanos</p>
                     <div className="footer-item__desktop">
                         <iframe 

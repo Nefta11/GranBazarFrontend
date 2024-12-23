@@ -331,10 +331,19 @@ footer {
     .menu-desktop {
         display: flex;
     }
+    .footer-mobile {
+        display: none;
+    }
 }
 
 @media (max-width: 1023px) {
     .menu-mobile {
+        display: flex;
+    }
+    .footer-desktop {
+        display: none;
+    }
+    .footer-mobile {
         display: flex;
     }
 }
@@ -349,13 +358,5 @@ footer {
     footer {
         flex-direction: column;
         height: 600px;
-    }
-
-    .footer-desktop {
-        display: none;
-    }
-
-    .footer-mobile {
-        display: flex;
     }
 }
