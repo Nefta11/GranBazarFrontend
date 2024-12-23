@@ -66,6 +66,16 @@
     color: var(--primary-color);
 }
 
+.btn-dark-mode {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 25px;
+    color: var(--primary-color);
+    margin-left: 35px;
+
+}
+
 @media (min-width: 1024px) {
     .menu-desktop {
         display: flex;
