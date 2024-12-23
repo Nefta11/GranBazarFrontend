@@ -1,22 +1,25 @@
 import React from 'react';
+import '../assets/styles/main-view.css'; // Importa el archivo CSS
 
 const Home = () => {
     return (
         <div>
+            {/* Elimina la etiqueta <link> */}
+            {/* <link rel="stylesheet" href="../assets/styles/main-view.css" /> */}
             <header>
                 <div className="menu-desktop">
                     <div className="container-logo">
                         <a href="index.php">
-                            <img src="logo_gran_bazar.jpeg" alt="icono gran bazar" />
+                            <img src="../assets/images/logo_gran_bazar.jpeg" alt="icono gran bazar" />
                         </a>
                     </div>
                     <div className="container-buttons">
                         <h1 className="title-app">Gran Bazar</h1>
                         <ul className="list-buttons">
-                            <li><a href="index.php">Home</a></li>
-                            <li><a href="mujeres.php">Mujeres</a></li>
-                            <li><a href="ninas.php">Niñas</a></li>
-                            <li><a href="cart.php" id="cart-link"><i className="bx bxs-cart-alt card-icon"></i></a></li>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/">Mujeres</a></li>
+                            <li><a href="/">Niñas</a></li>
+                            <li><a href="/" id="cart-link"><i className="bx bxs-cart-alt card-icon"></i></a></li>
                             <li className="dropdown">
                                 <i className='bx bx-user card-icon'></i>
                                 <div className="dropdown-content">
@@ -32,7 +35,7 @@ const Home = () => {
                     </div>
                     <div className="container-logo menu-mobile__item">
                         <a href="index.php">
-                            <img src="logo_gran_bazar.jpeg" alt="logo app" />
+                            <img src="../assets/images/logo_gran_bazar.jpeg" alt="logo app" />
                         </a>
                     </div>
                     <div className="container-shopping-cart menu-mobile__item" id="mobile-cart-icon">
@@ -66,7 +69,7 @@ const Home = () => {
             <footer>
                 <section className="footer-desktop">
                     <div className="footer-item__desktop">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d4011.1913055687737!2d-97.9584259705053!3d20.238582122701505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2smx!4v1691865537809!5m2!1sen!2smx" width="600" height="450" style={{ border: 0 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="location"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d4011.1913055687737!2d-97.9584259705053!3d20.238582122701505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2smx!4v1691865537809!5m2!1sen!2smx" width="600" height="450" style={{ border: 0 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="location" title="Ubicación Gran Bazar Desktop"></iframe>
                     </div>
                     <div className="footer-item__desktop two">
                         <p>Encuentranos en nuestras redes sociales</p>
@@ -88,7 +91,7 @@ const Home = () => {
                     </div>
                     <p className="texto-footer-mobile">Visitanos</p>
                     <div className="footer-item__desktop">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d4011.1913055687737!2d-97.9584259705053!3d20.238582122701505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2smx!4v1691865537809!5m2!1sen!2smx" width="600" height="450" style={{ border: 0 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="location"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d4011.1913055687737!2d-97.9584259705053!3d20.238582122701505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2smx!4v1691865537809!5m2!1sen!2smx" width="600" height="450" style={{ border: 0 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="location" title="Ubicación Gran Bazar Mobile"></iframe>
                     </div>
                 </section>
             </footer>
