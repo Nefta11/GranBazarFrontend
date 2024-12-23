@@ -24,10 +24,10 @@
 }
 
 
-.container-logo img {
+.container-logo img {/* Logo escritorio*/
     width: 80px;
     height: 80px;
-    margin-left: 100px;
+    margin-left: 10px;
 }
 
 .container-buttons {
@@ -54,26 +54,11 @@
     text-decoration: none;
 }
 
-li i,
-.menu-mobile__item i {
-    color: var(--primary-color);
-    font-size: 2.4rem;
-    cursor: pointer;
-}
-
 .title-app {
     font-size: 3.6rem;
     position: absolute;
     bottom: calc(50% - 25px);
     left: -100px;
-}
-
-.menu-mobile__item {
-    width: 96px;
-}
-
-.menu-mobile__item i {
-    font-size: 35px;
 }
 
 .btn-mobile-menu {
@@ -117,9 +102,8 @@ li i,
     }
 
     .container-logo img {
-        width: 50px;
-        height: 50px;
-        margin-right: 10px;
+        width: 55px;
+        height: 55px;
     }
 
     .container-logo h2 {
@@ -134,7 +118,6 @@ li i,
         margin-right: 10px;
         position: relative;
         top: 5px;
-        /* Ajusta para bajar el icono */
     }
 
     .list-buttons {
@@ -148,8 +131,8 @@ li i,
         position: absolute;
         top: 90px;
         /* Ajusta según la altura del menú */
-        left: 0;
-        z-index: 1000;
+        margin-right: 155px;
+        z-index: 10;
     }
 
     .list-buttons.active {
