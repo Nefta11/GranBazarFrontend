@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../assets/styles/menu.css';
-import { FaHome, FaFemale, FaChild, FaMale, FaBars } from 'react-icons/fa'; // Importa el icono de menú
+import { FaHome, FaFemale, FaChild, FaMale, FaBars, FaUser } from 'react-icons/fa'; // Importa el icono de usuario
 
 const MenuMobile = ({ logo }) => {
     const [menuActive, setMenuActive] = useState(false);
@@ -11,10 +11,12 @@ const MenuMobile = ({ logo }) => {
 
     return (
         <div className="menu-mobile">
+            <button className="btn-mobile-menu" onClick={toggleMenu}><FaBars /></button>
             <div className="container-logo menu-mobile__item">
                 <a href="/">
                     <img src={logo} alt="logo app" />
                 </a>
+                <h2>Gran Bazar</h2>
             </div>
             <div className="container-buttons">
                 <ul className={`list-buttons ${menuActive ? 'active' : ''}`}>
@@ -30,7 +32,7 @@ const MenuMobile = ({ logo }) => {
                         </div>
                     </li>
                 </ul>
-                <button className="btn-mobile-menu" onClick={toggleMenu}><FaBars /></button>
+                <FaUser className="user-icon" />
             </div>
         </div>
     );

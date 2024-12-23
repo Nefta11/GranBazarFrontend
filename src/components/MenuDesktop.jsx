@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../assets/styles/menu.css';
-import { FaHome, FaFemale, FaChild, FaMale, FaBars } from 'react-icons/fa'; // Importa el icono de menú
+import { FaHome, FaFemale, FaChild, FaMale, FaBars } from 'react-icons/fa'; 
 
 const MenuDesktop = ({ logo }) => {
     const [menuActive, setMenuActive] = useState(false);
