@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-
 const initState = {
     id: null,
     type: null,
@@ -13,12 +12,9 @@ export const authSlice = createSlice({
     initialState: initState,
     reducers: {
         logIn: (state, action) => {
-            const newState = { ...state, ...action.payload, session: true };
-            saveValue("token", newState.token);
-            return newState;
+            return { ...state, ...action.payload, session: true };
         },
         logOut: () => {
-            deleteValue("token");
             return initState;
         },
     },
