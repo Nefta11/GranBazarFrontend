@@ -4,7 +4,6 @@ import store from "./store/store";
 import App from "./App";
 import { logIn } from "../src/features/authSlice";
 import { Provider, useDispatch, useSelector } from "react-redux";
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 const RootComponent = () => {
   const dispatch = useDispatch();

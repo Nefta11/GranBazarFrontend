@@ -42,7 +42,7 @@ const MenuMobile = ({ logo }) => {
             <div className="user-menu">
                 <FaUser className="user-icon" onClick={toggleUserMenu} />
                 <ul className={`list-user-menu ${userMenuActive ? 'active' : ''}`}>
-                    <li><a href="/profile"><FaUserCircle /> Mi perfil</a></li>
+                    <li><a href="/Profile"><FaUserCircle /> Mi perfil</a></li>
                     <li><a href="/logout"><FaSignOutAlt /> Cerrar sesión</a></li>
                 </ul>
             </div>
