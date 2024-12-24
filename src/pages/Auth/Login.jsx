@@ -1,5 +1,6 @@
 import React from 'react';
 import '../../assets/styles/Login.css';
+import logoGoogle from '../../assets/images/google.png';
 
 const Login = () => {
     return (
@@ -12,26 +13,30 @@ const Login = () => {
             </div>
 
             <div className="login-right">
-                <h2 className="login-welcome"> Iniciar Sesion</h2>
+                <h2 className="login-welcome">Iniciar sesión</h2>
                 <form className="login-form">
                     <div className="form-group">
-                        <label htmlFor="email">Correo electrónico: </label>
+                        <label htmlFor="email" className='em'>Correo electrónico: </label>
                         <input type="email" id="email" />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="password">Contraseña:</label>
+                        <label htmlFor="password" className='ps'>Contraseña:</label>
                         <input type="password" id="password" />
                     </div>
                     <div className="form-options">
                         <div>
                             <input type="checkbox" id="remember-me" />
-                            <label htmlFor="remember-me">Recordarme</label>
+                            <label  htmlFor="remember-me">Recordarme</label>
                         </div>
                         <a href="#" className="forgot-password">
                             Olvidaste tu contraseña?
                         </a>
                     </div>
-                    <button type="submit" className="login-button">Sign In</button>
+                    <button type="submit" className="login-button">Iniciar sesión</button>
+                    <button className="google-button">
+                        <img src={logoGoogle} alt="Google logo" className="google-icon" />
+                        Continuar con Google
+                    </button>
                     <p className="signup-text">
                         ¿No tienes una cuenta?<a href="#" className="signup-link"> Registrarse</a>
                     </p>
