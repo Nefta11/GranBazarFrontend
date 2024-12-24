@@ -34,11 +34,10 @@ const MenuDesktop = ({ logo }) => {
             <div className="container-buttons">
                 <h1 className="title-app">Gran Bazar</h1>
                 <ul className={`list-buttons ${menuActive ? 'active' : ''}`}>
-                    <li><a href="/login"><FaHome /> Home</a></li>
                     <li><a href="/"><FaFemale /> Mujeres</a></li>
                     <li><a href="/"><FaMale /> Hombres</a></li>
                     <li><a href="/"><FaChild /> Niñ@s</a></li>
-                    <li><a href="/"><FaUser /> Mi Perfil</a></li>
+                    <li><a href="/"><FaUser /></a></li>
                 </ul>
                 <button className="btn-mobile-menu" onClick={toggleMenu}><FaBars /></button>
             </div>
