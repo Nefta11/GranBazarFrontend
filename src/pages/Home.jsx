@@ -1,5 +1,5 @@
 import React from 'react';
-import '../assets/styles/main-view.css';
+import '../assets/styles/stylesPages/main-view.css';
 import logoGranBazar from '../assets/images/Gran-Bazar-removebg-preview (2).png';
 import MenuDesktop from '../components/MenuDesktop';
 import MenuMobile from '../components/MenuMobile';

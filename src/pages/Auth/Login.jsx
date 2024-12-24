@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../assets/styles/Login.css';
+import '../../assets/styles/stylesPages/Login.css';
 import logoGoogle from '../../assets/images/google.png';
 
 const Login = () => {
@@ -38,7 +38,7 @@ const Login = () => {
                         Continuar con Google
                     </button>
                     <p className="signup-text">
-                        ¿No tienes una cuenta?<a href="#" className="signup-link"> Registrarse</a>
+                        ¿No tienes una cuenta?<a href="/Register" className="signup-link"> Registrarse</a>
                     </p>
                 </form>
             </div>
