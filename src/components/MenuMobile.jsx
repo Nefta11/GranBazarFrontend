@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import '../assets/styles/stylesComponents/menu.css';
-import { FaHome, FaFemale, FaChild, FaMale, FaBars, FaUser, FaMoon, FaSun } from 'react-icons/fa';
+import { FaHome, FaFemale, FaChild, FaMale, FaBars, FaUser, FaMoon, FaSun, FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
 
 const MenuMobile = ({ logo }) => {
     const [menuActive, setMenuActive] = useState(false);
     const [darkMode, setDarkMode] = useState(false);
+    const [userMenuActive, setUserMenuActive] = useState(false);
 
     const toggleMenu = () => {
         setMenuActive(!menuActive);
@@ -13,6 +14,10 @@ const MenuMobile = ({ logo }) => {
     const toggleDarkMode = () => {
         setDarkMode(!darkMode);
         document.body.classList.toggle('dark-mode', !darkMode);
+    };
+
+    const toggleUserMenu = () => {
+        setUserMenuActive(!userMenuActive);
     };
 
     return (
@@ -32,12 +37,15 @@ const MenuMobile = ({ logo }) => {
                             {darkMode ? <><FaSun /> Claro</> : <><FaMoon /> Oscuro</>}
                         </a>
                     </li>
-
                 </ul>
             </div>
-            <a href="/">
-                <FaUser className="user-icon" />
-            </a>
+            <div className="user-menu">
+                <FaUser className="user-icon" onClick={toggleUserMenu} />
+                <ul className={`list-user-menu ${userMenuActive ? 'active' : ''}`}>
+                    <li><a href="/profile"><FaUserCircle /> Mi perfil</a></li>
+                    <li><a href="/logout"><FaSignOutAlt /> Cerrar sesión</a></li>
+                </ul>
+            </div>
         </div>
     );
 };

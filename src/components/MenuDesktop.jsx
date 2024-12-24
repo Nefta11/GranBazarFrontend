@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import '../assets/styles/stylesComponents/menu.css';
-import { FaHome, FaFemale, FaChild, FaMale, FaBars, FaUser, FaSun, FaMoon } from 'react-icons/fa';
+import { FaHome, FaFemale, FaChild, FaMale, FaBars, FaUser, FaSun, FaMoon, FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
 
 const MenuDesktop = ({ logo }) => {
     const [menuActive, setMenuActive] = useState(false);
     const [darkMode, setDarkMode] = useState(false);
+    const [userMenuActive, setUserMenuActive] = useState(false);
 
     useEffect(() => {
         const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -19,6 +20,10 @@ const MenuDesktop = ({ logo }) => {
     const toggleDarkMode = () => {
         setDarkMode(!darkMode);
         document.body.classList.toggle('dark-mode', !darkMode);
+    };
+
+    const toggleUserMenu = () => {
+        setUserMenuActive(!userMenuActive);
     };
 
     return (
@@ -37,9 +42,15 @@ const MenuDesktop = ({ logo }) => {
                     <li><a href="/"><FaFemale /> Mujeres</a></li>
                     <li><a href="/"><FaMale /> Hombres</a></li>
                     <li><a href="/"><FaChild /> Niñ@s</a></li>
-                    <li><a href="/"><FaUser /></a></li>
                 </ul>
                 <button className="btn-mobile-menu" onClick={toggleMenu}><FaBars /></button>
+            </div>
+            <div className="user-menu">
+                <FaUser className="user-icon" onClick={toggleUserMenu} />
+                <ul className={`list-user-menu ${userMenuActive ? 'active' : ''}`}>
+                    <li><a href="/profile"><FaUserCircle /> Mi perfil</a></li>
+                    <li><a href="/logout"><FaSignOutAlt /> Cerrar sesión</a></li>
+                </ul>
             </div>
         </div>
     );
