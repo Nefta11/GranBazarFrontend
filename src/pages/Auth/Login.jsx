@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import '../../assets/styles/stylesPages/AuthStyles/Login.css';
 import GoogleB from '../../components/AuthComponents/GoogleB';
+import { authUser } from '../../services/Api';
+import { logIn } from '../../features/authSlice';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [emailValid, setEmailValid] = useState(false);
     const [passwordValid, setPasswordValid] = useState(false);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const authData = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        console.log("Datos guardados en Redux:", authData);
+    }, [authData, dispatch]);
 
     const validateEmail = (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -26,7 +38,7 @@ const Login = () => {
         setPasswordValid(value.length >= 8);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!email || !password) {
             Swal.fire('Error', 'Todos los campos deben ser llenados', 'error');
@@ -40,8 +52,14 @@ const Login = () => {
             Swal.fire('Error', 'La contraseña debe tener al menos 8 caracteres', 'error');
             return;
         }
-        // ...existing code...
-        Swal.fire('Éxito', 'Inicio de sesión exitoso', 'success');
+        try {
+            const response = await authUser({ email, password });
+            dispatch(logIn(response));
+            Swal.fire('Éxito', 'Inicio de sesión exitoso', 'success');
+            navigate('/');
+        } catch (error) {
+            Swal.fire('Error', 'Error en la autenticación', 'error');
+        }
     };
 
     return (
