@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import '../../assets/styles/stylesPages/AuthStyles/Login.css';
 import GoogleB from '../../components/AuthComponents/GoogleB';
@@ -88,14 +88,14 @@ const Login = () => {
                             <input type="checkbox" id="remember-me" />
                             <label  htmlFor="remember-me">Recordarme</label>
                         </div>
-                        <a href="#" className="forgot-password">
+                        <Link to="#" className="forgot-password">
                             Olvidaste tu contraseña?
-                        </a>
+                        </Link>
                     </div>
                     <button type="submit" className="login-button">Iniciar sesión</button>
                     <GoogleB />
                     <p className="signup-text">
-                        ¿No tienes una cuenta?<a href="/Register" className="signup-link"> Registrarse</a>
+                        ¿No tienes una cuenta?<Link to="/Register" className="signup-link"> Registrarse</Link>
                     </p>
                 </form>
             </div>

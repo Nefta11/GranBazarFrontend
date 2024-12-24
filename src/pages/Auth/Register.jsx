@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../assets/styles/stylesPages/AuthStyles/Register.css';
 import GoogleB from '../../components/AuthComponents/GoogleB';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
     return (
@@ -35,7 +36,7 @@ const Register = () => {
                     <button type="submit" className="register-button">Registrarse</button>
                     <GoogleB />
                     <p className="login-text">
-                        ¿Ya tienes una cuenta? <a href="/" className="login-link">Inicia sesión</a>
+                        ¿Ya tienes una cuenta? <Link to="/" className="login-link">Inicia sesión</Link>
                     </p>
                 </form>
             </div>

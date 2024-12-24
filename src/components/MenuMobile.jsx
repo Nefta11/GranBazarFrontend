@@ -30,9 +30,9 @@ const MenuMobile = ({ logo }) => {
             </div>
             <div className="container-buttons">
                 <ul className={`list-buttons ${menuActive ? 'active' : ''}`}>
-                    <li><Link href="/"><FaFemale /> Mujeres</Link></li>
-                    <li><Link href="/"><FaMale /> Hombres</Link></li>
-                    <li><Link href="/"><FaChild /> Niñas</Link></li>
+                    <li><Link to="/"><FaFemale /> Mujeres</Link></li>
+                    <li><Link to="/"><FaMale /> Hombres</Link></li>
+                    <li><Link to="/"><FaChild /> Niñas</Link></li>
                     <li>
                         <a className="btn-dark-mode2" onClick={toggleDarkMode}>
                             {darkMode ? <><FaSun /> Claro</> : <><FaMoon /> Oscuro</>}
@@ -43,8 +43,8 @@ const MenuMobile = ({ logo }) => {
             <div className="user-menu">
                 <FaUser className="user-icon" onClick={toggleUserMenu} />
                 <ul className={`list-user-menu ${userMenuActive ? 'active' : ''}`}>
-                    <li><Link href="/Profile"><FaUserCircle /> Mi perfil</Link></li>
-                    <li><Link href=""><FaSignOutAlt /> Cerrar sesión</Link></li>
+                    <li><Link to="/Profile"><FaUserCircle /> Mi perfil</Link></li>
+                    <li><Link to=""><FaSignOutAlt /> Cerrar sesión</Link></li>
                 </ul>
             </div>
         </div>
