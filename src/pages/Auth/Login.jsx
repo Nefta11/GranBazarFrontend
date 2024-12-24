@@ -1,8 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 import '../../assets/styles/stylesPages/AuthStyles/Login.css';
 import GoogleB from '../../components/AuthComponents/GoogleB';
 
 const Login = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [emailValid, setEmailValid] = useState(false);
+    const [passwordValid, setPasswordValid] = useState(false);
+
+    const validateEmail = (email) => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
+    };
+
+    const handleEmailChange = (e) => {
+        const value = e.target.value;
+        setEmail(value);
+        setEmailValid(validateEmail(value));
+    };
+
+    const handlePasswordChange = (e) => {
+        const value = e.target.value;
+        setPassword(value);
+        setPasswordValid(value.length >= 8);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!email || !password) {
+            Swal.fire('Error', 'Todos los campos deben ser llenados', 'error');
+            return;
+        }
+        if (!emailValid) {
+            Swal.fire('Error', 'El correo electrónico no es válido', 'error');
+            return;
+        }
+        if (!passwordValid) {
+            Swal.fire('Error', 'La contraseña debe tener al menos 8 caracteres', 'error');
+            return;
+        }
+        // ...existing code...
+        Swal.fire('Éxito', 'Inicio de sesión exitoso', 'success');
+    };
+
     return (
         <div className="login-container">
             <div className="login-left">
@@ -14,14 +55,16 @@ const Login = () => {
 
             <div className="login-right">
                 <h2 className="login-welcome">Iniciar sesión</h2>
-                <form className="login-form">
+                <form className="login-form" onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="email" className='em'>Correo electrónico: </label>
-                        <input type="email" id="email" />
+                        <input type="email" id="email" value={email} onChange={handleEmailChange} />
+                        {emailValid && <span className="valid-check">✔️</span>}
                     </div>
                     <div className="form-group">
                         <label htmlFor="password" className='ps'>Contraseña:</label>
-                        <input type="password" id="password" />
+                        <input type="password" id="password" value={password} onChange={handlePasswordChange} />
+                        {passwordValid && <span className="valid-check">✔️</span>}
                     </div>
                     <div className="form-options">
                         <div>
