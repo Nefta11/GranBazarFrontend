@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../assets/styles/menu.css';
+import '../assets/styles/stylesComponents/menu.css';
 import { FaHome, FaFemale, FaChild, FaMale, FaBars, FaUser, FaSun, FaMoon } from 'react-icons/fa';
 
 const MenuDesktop = ({ logo }) => {

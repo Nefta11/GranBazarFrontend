@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../assets/styles/menu.css';
+import '../assets/styles/stylesComponents/menu.css';
 import { FaHome, FaFemale, FaChild, FaMale, FaBars, FaUser, FaMoon, FaSun } from 'react-icons/fa';
 
 const MenuMobile = ({ logo }) => {
