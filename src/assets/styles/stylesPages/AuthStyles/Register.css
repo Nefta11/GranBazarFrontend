@@ -1,3 +1,4 @@
+/* General Styles */
 .register-container {
     display: flex;
     height: 100vh;
@@ -132,8 +133,22 @@
 }
 
 @media (max-width: 580px) {
+    .register-container {
+        flex-direction: column;
+    }
+
+    .register-right {
+        order: -1;
+        width: 100%;
+        height: 40vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .register-left {
         padding: 20px;
+        width: 100%;
     }
 
     .register-title {
@@ -151,9 +166,33 @@
         width: 100%;
     }
 
+    .form-group .fn {
+        margin-right: 200px;
+    }
+
+    .form-group .ln {
+        margin-left: -200px;
+    }
+
+    .form-group .em {
+        margin-left: 20px;
+    }
+
+    .form-group .ph {
+        margin-left: -200px;
+    }
+
+    .form-group .bd {
+        margin-left: -120px;
+    }
+
+    .form-group .ps {
+        margin-left: 20px;
+    }
+
     .form-group input {
         max-width: 80%;
-        padding: 13px;
+        padding: 10px;
         margin: -1px;
         text-align: center;
     }
