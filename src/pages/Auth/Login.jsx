@@ -18,7 +18,6 @@ const Login = () => {
     const authData = useSelector((state) => state.auth);
 
     useEffect(() => {
-        console.log("Datos guardados en Redux:", authData);
     }, [authData, dispatch]);
 
     const validateEmail = (email) => {
