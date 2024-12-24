@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../assets/styles/stylesPages/Login.css';
+import '../../assets/styles/stylesPages/AuthStyles/Login.css';
 import logoGoogle from '../../assets/images/google.png';
 
 const Login = () => {
