@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../assets/styles/stylesComponents/menu.css';
 import { FaHome, FaFemale, FaChild, FaMale, FaBars, FaUser, FaMoon, FaSun, FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const MenuMobile = ({ logo }) => {
     const [menuActive, setMenuActive] = useState(false);
@@ -29,9 +30,9 @@ const MenuMobile = ({ logo }) => {
             </div>
             <div className="container-buttons">
                 <ul className={`list-buttons ${menuActive ? 'active' : ''}`}>
-                    <li><a href="/"><FaFemale /> Mujeres</a></li>
-                    <li><a href="/"><FaMale /> Hombres</a></li>
-                    <li><a href="/"><FaChild /> Niñas</a></li>
+                    <li><Link href="/"><FaFemale /> Mujeres</Link></li>
+                    <li><Link href="/"><FaMale /> Hombres</Link></li>
+                    <li><Link href="/"><FaChild /> Niñas</Link></li>
                     <li>
                         <a className="btn-dark-mode2" onClick={toggleDarkMode}>
                             {darkMode ? <><FaSun /> Claro</> : <><FaMoon /> Oscuro</>}
@@ -42,8 +43,8 @@ const MenuMobile = ({ logo }) => {
             <div className="user-menu">
                 <FaUser className="user-icon" onClick={toggleUserMenu} />
                 <ul className={`list-user-menu ${userMenuActive ? 'active' : ''}`}>
-                    <li><a href="/Profile"><FaUserCircle /> Mi perfil</a></li>
-                    <li><a href=""><FaSignOutAlt /> Cerrar sesión</a></li>
+                    <li><Link href="/Profile"><FaUserCircle /> Mi perfil</Link></li>
+                    <li><Link href=""><FaSignOutAlt /> Cerrar sesión</Link></li>
                 </ul>
             </div>
         </div>
