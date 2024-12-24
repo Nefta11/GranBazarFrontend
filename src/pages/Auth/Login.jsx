@@ -55,7 +55,7 @@ const Login = () => {
             const response = await authUser({ email, password });
             dispatch(logIn(response));
             Swal.fire('Éxito', 'Inicio de sesión exitoso', 'success');
-            navigate('/');
+            navigate('/Home');
         } catch (error) {
             Swal.fire('Error', 'Error en la autenticación', 'error');
         }
