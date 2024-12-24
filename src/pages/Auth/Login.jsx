@@ -33,7 +33,7 @@ const Login = () => {
                         </a>
                     </div>
                     <button type="submit" className="login-button">Iniciar sesión</button>
-
+                    <GoogleB />
                     <p className="signup-text">
                         ¿No tienes una cuenta?<a href="/Register" className="signup-link"> Registrarse</a>
                     </p>

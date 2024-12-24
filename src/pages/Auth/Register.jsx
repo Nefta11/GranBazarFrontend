@@ -1,5 +1,6 @@
 import React from 'react';
 import '../../assets/styles/stylesPages/AuthStyles/Register.css';
+import GoogleB from '../../components/AuthComponents/GoogleB';
 
 const Register = () => {
     return (
@@ -32,6 +33,7 @@ const Register = () => {
                         <input type="password" id="password" />
                     </div>
                     <button type="submit" className="register-button">Registrarse</button>
+                    <GoogleB />
                     <p className="login-text">
                         ¿Ya tienes una cuenta? <a href="/Login" className="login-link">Inicia sesión</a>
                     </p>
