@@ -6,38 +6,34 @@ const Login = () => {
         <div className="login-container">
             <div className="login-left">
                 <div className="login-overlay">
-                    <h1 className="login-title">Blockchain</h1>
-                    <h2 className="login-subtitle">Revolution in Advertising</h2>
-                    <p className="login-features">LOW FEES · CENSORSHIP RESISTANT · AI READY</p>
+                    <h2 className="login-subtitle">¡ Bienvenido de vuelta ! al</h2>
+                    <h1 className="login-title">Gran Bazar</h1>
                 </div>
             </div>
 
             <div className="login-right">
-                <h2 className="login-welcome">Hello!</h2>
-                <p className="login-description">
-                    Etiam pretium dapibus congue. Praesent a lorem erat. Morbi mollis posuere lacus, vel semper risus.
-                </p>
+                <h2 className="login-welcome"> Iniciar Sesion</h2>
                 <form className="login-form">
                     <div className="form-group">
-                        <label htmlFor="email">Email Address</label>
-                        <input type="email" id="email" placeholder="mtpiatek@gmail.com" />
+                        <label htmlFor="email">Correo electrónico: </label>
+                        <input type="email" id="email" />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="password">Password</label>
-                        <input type="password" id="password" placeholder="••••••••" />
+                        <label htmlFor="password">Contraseña:</label>
+                        <input type="password" id="password" />
                     </div>
                     <div className="form-options">
                         <div>
                             <input type="checkbox" id="remember-me" />
-                            <label htmlFor="remember-me">Remember me</label>
+                            <label htmlFor="remember-me">Recordarme</label>
                         </div>
                         <a href="#" className="forgot-password">
-                            Forgot password?
+                            Olvidaste tu contraseña?
                         </a>
                     </div>
                     <button type="submit" className="login-button">Sign In</button>
                     <p className="signup-text">
-                        Don’t have an account? <a href="#" className="signup-link">Sign Up</a>
+                        ¿No tienes una cuenta?<a href="#" className="signup-link"> Registrarse</a>
                     </p>
                 </form>
             </div>

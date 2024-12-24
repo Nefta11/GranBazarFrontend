@@ -36,11 +36,6 @@
     margin: 10px 0;
 }
 
-.login-features {
-    font-size: 14px;
-    color: #b0bdf2;
-    margin-top: 20px;
-}
 
 /* Right Section */
 .login-right {
@@ -56,12 +51,7 @@
     font-size: 28px;
     font-weight: bold;
     color: #0b1136;
-}
-
-.login-description {
-    font-size: 14px;
-    color: #6e6e6e;
-    margin: 10px 0 30px;
+    margin: 30px;
 }
 
 .login-form {
