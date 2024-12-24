@@ -213,13 +213,13 @@
 
     .google-button {
         max-width: 80%;
-        padding: 8px;
+        padding: 5px;
         align-items: center;
     }
 
     .login-button {
         max-width: 80%;
-        padding: 12px;
+        padding: 10px;
         align-items: center;
     }
 }
