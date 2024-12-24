@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../assets/styles/stylesPages/AuthStyles/Login.css';
-import logoGoogle from '../../assets/images/google.png';
+import GoogleB from '../../components/AuthComponents/GoogleB';
 
 const Login = () => {
     return (
@@ -33,10 +33,7 @@ const Login = () => {
                         </a>
                     </div>
                     <button type="submit" className="login-button">Iniciar sesión</button>
-                    <button className="google-button">
-                        <img src={logoGoogle} alt="Google logo" className="google-icon" />
-                        Continuar con Google
-                    </button>
+
                     <p className="signup-text">
                         ¿No tienes una cuenta?<a href="/Register" className="signup-link"> Registrarse</a>
                     </p>
