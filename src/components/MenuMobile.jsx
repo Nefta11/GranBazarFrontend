@@ -30,9 +30,9 @@ const MenuMobile = ({ logo }) => {
             </div>
             <div className="container-buttons">
                 <ul className={`list-buttons ${menuActive ? 'active' : ''}`}>
-                    <li><Link to="/"><FaFemale /> Mujeres</Link></li>
-                    <li><Link to="/"><FaMale /> Hombres</Link></li>
-                    <li><Link to="/"><FaChild /> Niñas</Link></li>
+                    <li><Link to=""><FaFemale /> Mujeres</Link></li>
+                    <li><Link to=""><FaMale /> Hombres</Link></li>
+                    <li><Link to=""><FaChild /> Niñas</Link></li>
                     <li>
                         <a className="btn-dark-mode2" onClick={toggleDarkMode}>
                             {darkMode ? <><FaSun /> Claro</> : <><FaMoon /> Oscuro</>}

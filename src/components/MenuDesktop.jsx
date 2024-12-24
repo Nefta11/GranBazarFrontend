@@ -33,16 +33,16 @@ const MenuDesktop = ({ logo }) => {
                 {darkMode ? <FaSun /> : <FaMoon />}
             </button>
             <div className="container-logo">
-                <a href="/">
+                <Link to="/Home">
                     <img src={logo} alt="icono gran bazar" />
-                </a>
+                </Link>
             </div>
             <div className="container-buttons">
                 <h1 className="title-app">Gran Bazar</h1>
                 <ul className={`list-buttons ${menuActive ? 'active' : ''}`}>
-                    <li><Link to="/"><FaFemale /> Mujeres</Link></li>
-                    <li><Link to="/"><FaMale /> Hombres</Link></li>
-                    <li><Link to="/"><FaChild /> Niñ@s</Link></li>
+                    <li><Link to=""><FaFemale /> Mujeres</Link></li>
+                    <li><Link to=""><FaMale /> Hombres</Link></li>
+                    <li><Link to=""><FaChild /> Niñ@s</Link></li>
                     <li><a><FaUser className="user-icon" onClick={toggleUserMenu} />Hola{ }
                         <ul className={`list-user-menu ${userMenuActive ? 'active' : ''}`}>
                             <li><Link to="/Profile"><FaUserCircle /> Mi perfil</Link></li>
