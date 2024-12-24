@@ -163,7 +163,7 @@
 }
 
 /* Media Queries */
-@media (max-width: 1135px) {
+@media (max-width: 799px) {
     .login-container {
         flex-direction: column;
         overflow-y: auto;

@@ -35,7 +35,7 @@ const Register = () => {
                     <button type="submit" className="register-button">Registrarse</button>
                     <GoogleB />
                     <p className="login-text">
-                        ¿Ya tienes una cuenta? <a href="/Login" className="login-link">Inicia sesión</a>
+                        ¿Ya tienes una cuenta? <a href="/" className="login-link">Inicia sesión</a>
                     </p>
                 </form>
             </div>

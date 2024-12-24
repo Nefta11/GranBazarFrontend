@@ -121,7 +121,7 @@
 }
 
 /* Media Queries */
-@media (max-width: 1135px) {
+@media (max-width: 799px) {
     .register-container {
         flex-direction: column;
         overflow-y: auto;
@@ -129,6 +129,7 @@
 
     .register-right {
         height: 50vh;
+        order: -1;
     }
 }
 

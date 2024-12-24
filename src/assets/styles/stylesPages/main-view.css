@@ -60,7 +60,7 @@ main {
     height: 800px;
 }
 
-@media (max-width: 1135px) {
+@media (max-width: 799px) {
     .section {
         overflow-y: scroll;
     }
