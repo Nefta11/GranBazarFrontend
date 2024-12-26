@@ -65,8 +65,8 @@ const Login = () => {
         <div className="login-container">
             <div className="login-left">
                 <div className="login-overlay">
-                    <h2 className="login-subtitle">¡ Bienvenido de vuelta ! al</h2>
-                    <h1 className="login-title">Gran Bazar</h1>
+                    <h2 className="login-subtitle">¡ Bienvenido de vuelta al</h2>
+                    <h1 className="login-title">Gran Bazar !</h1>
                 </div>
             </div>
 
