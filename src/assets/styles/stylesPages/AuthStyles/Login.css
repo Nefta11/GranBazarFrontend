@@ -6,7 +6,7 @@
 
 .login-left {
     flex: 1;
-    background: url('../../../images/loginImage.jpg') no-repeat center center;
+    background: url('../../../images/gifLoginS.gif') no-repeat center center;
     background-size: cover;
     position: relative;
     display: flex;
