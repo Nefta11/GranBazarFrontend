@@ -11,11 +11,24 @@ const GoogleB = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const getUserInfo = async (token) => {
+        if (!token) return;
+        try {
+            const response = await fetch("https://www.googleapis.com/userinfo/v2/me", {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            return await response.json();
+        } catch (error) {
+            console.error('Error al obtener información del usuario:', error);
+        }
+    };
+
     const handleSuccess = async (response) => {
         try {
             const { tokenId } = response;
             const userData = await googleAuth(tokenId);
-            dispatch(logIn(userData));
+            const userInfo = await getUserInfo(tokenId);
+            dispatch(logIn({ ...userData, ...userInfo }));
             navigate('/Home');
         } catch (error) {
             console.error('Error en la autenticación con Google:', error);
