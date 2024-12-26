@@ -204,3 +204,36 @@
         align-items: center;
     }
 }
+
+@media (prefers-color-scheme: dark) {
+    .register-left {
+        background: #333;
+        color: white;
+    }
+
+    .register-right::before {
+        background-color: rgba(81, 75, 243, 0.7);
+    }
+
+    .form-group label {
+        color: #ccc;
+    }
+
+    .form-group input {
+        background: #555;
+        color: white;
+        border: 1px solid #777;
+    }
+
+    .register-button {
+        background: var(--primary-color);
+    }
+
+    .register-button:hover {
+        background: var(--secondary-color);
+    }
+
+    .login-link {
+        color: var(--secondary-color);
+    }
+}
