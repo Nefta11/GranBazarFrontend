@@ -36,7 +36,7 @@ const MenuDesktop = ({ logo }) => {
                 <Link to="/Home">
                     <img src={logo} alt="icono gran bazar" />
                 </Link>
-            </div>
+            </div> 
             <div className="container-buttons">
                 <h1 className="title-app">Gran Bazar</h1>
                 <ul className={`list-buttons ${menuActive ? 'active' : ''}`}>
