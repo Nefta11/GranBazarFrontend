@@ -38,7 +38,8 @@ body {
 }
 
 
-.container-logo img {/* Logo escritorio*/
+.container-logo img {
+    /* Logo escritorio*/
     width: 80px;
     height: 80px;
     margin-left: 80px;
@@ -69,7 +70,7 @@ body {
 }
 
 .title-app {
-    font-size:45px;
+    font-size: 45px;
     position: absolute;
     color: var(--primary-color);
     bottom: calc(50% - 25px);
@@ -122,10 +123,13 @@ body {
     background-color: var(--background-color-two);
     border-bottom-left-radius: 15px;
     list-style: none;
-    padding: 0 10px;
+    padding: 0 2px;
     z-index: 10;
 }
 
+.list-user-menu li a svg {
+    margin-right: 8px;
+}
 .list-user-menu.active {
     display: flex;
 }
@@ -242,7 +246,7 @@ body {
         border-bottom-right-radius: 15px;
     }
 
-    .btn-dark-mode2 li button:hover{
+    .btn-dark-mode2 li button:hover {
         background-color: var(--secondary-color);
         color: var(--background-color);
         border-bottom-right-radius: 15px;
