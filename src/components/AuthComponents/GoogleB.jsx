@@ -41,7 +41,7 @@ const GoogleB = () => {
 
     return (
         <GoogleLogin
-            clientId="466150988702-7oi0qkmt99ulrdk6al861k7mffb4phtp.apps.googleusercontent.com"
+            clientId="631817857538-ps3dn27d32dp5kc106ri0sr347ubp4ls.apps.googleusercontent.com"
             buttonText="Continuar con Google"
             onSuccess={handleSuccess}
             onFailure={handleFailure}
