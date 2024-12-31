@@ -12,7 +12,8 @@ const RootComponent = () => {
     const authData = localStorage.getItem("authData");
     if (authData) {
       const parsedData = JSON.parse(authData);
-      dispatch(logIn(parsedData)); // Restaura estado en Redux
+      dispatch(logIn(parsedData));
+      console.log("parsedData", parsedData);
     }
   }, [dispatch]);
 
