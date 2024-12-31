@@ -53,14 +53,23 @@ const Login = () => {
         }
         try {
             const response = await authUser({ email, password });
-            dispatch(logIn(response));
-            localStorage.setItem("tokenUser", JSON.stringify(response));
+
+            // Extrae el token de los headers y lo agrega a la respuesta
+            const { token, ...userData } = response;
+
+            // Ahora pasa el token junto con los datos del usuario al dispatch
+            dispatch(logIn({ ...userData, token }));
+
+            // Guarda el token en el localStorage
+            localStorage.setItem("tokenUser", JSON.stringify({ ...userData, token }));
+
             Swal.fire('Éxito', 'Inicio de sesión exitoso', 'success');
             navigate('/Home');
         } catch (error) {
             Swal.fire('Error', 'Error en la autenticación', 'error');
         }
     };
+
 
     return (
         <div className="login-container">
