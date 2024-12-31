@@ -1,4 +1,4 @@
-// Actualización del API para manejar el cambio en el token
+// Configuración inicial del cliente Axios
 import axios from 'axios';
 
 const api = axios.create({
@@ -50,10 +50,14 @@ export const authUser = async (credentials) => {
     }
 };
 
-// Obtener usuario por ID (cambiando cómo se pasa el token)
+// Obtener usuario por ID
 export const getUserById = async (id, token) => {
     try {
-        const response = await api.post(`/user/${id}`, { token });
+        const response = await api.get(`/user/${id}`, {
+            headers: {
+                'auth-token': token,
+            },
+        });
         return response.data;
     } catch (error) {
         console.error('Error obteniendo usuario:', error);
@@ -75,7 +79,11 @@ export const googleAuth = async (tokenId) => {
 // Crear producto
 export const createProduct = async (productData, token) => {
     try {
-        const response = await api.post('/products', { ...productData, token });
+        const response = await api.post('/products', productData, {
+            headers: {
+                'auth-token': token,
+            },
+        });
         return response.data;
     } catch (error) {
         console.error('Error creando producto:', error);
@@ -86,7 +94,11 @@ export const createProduct = async (productData, token) => {
 // Obtener todos los productos
 export const getAllProducts = async (token) => {
     try {
-        const response = await api.post('/products', { token });
+        const response = await api.get('/products', {
+            headers: {
+                'auth-token': token,
+            },
+        });
         return response.data;
     } catch (error) {
         console.error('Error obteniendo productos:', error);
@@ -97,7 +109,11 @@ export const getAllProducts = async (token) => {
 // Actualizar producto
 export const updateProduct = async (id, productData, token) => {
     try {
-        const response = await api.put(`/products/${id}`, { ...productData, token });
+        const response = await api.put(`/products/${id}`, productData, {
+            headers: {
+                'auth-token': token,
+            },
+        });
         return response.data;
     } catch (error) {
         console.error('Error actualizando producto:', error);
@@ -109,7 +125,9 @@ export const updateProduct = async (id, productData, token) => {
 export const deleteProduct = async (id, token) => {
     try {
         const response = await api.delete(`/products/${id}`, {
-            data: { token },
+            headers: {
+                'auth-token': token,
+            },
         });
         return response.data;
     } catch (error) {
