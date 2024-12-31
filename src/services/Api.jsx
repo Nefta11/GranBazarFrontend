@@ -1,8 +1,7 @@
-// Configuración inicial del cliente Axios
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080/api',
+    baseURL: 'http://localhost:8080/api', 
     headers: {
         'Content-Type': 'application/json',
     },
@@ -11,16 +10,19 @@ const api = axios.create({
 // Función para manejar las respuestas de error
 const handleError = (error) => {
     if (error.response) {
+        // Error con la respuesta de la API, devolvemos el mensaje de error específico
         return {
             message: error.response.data.message || 'Algo salió mal',
-            status: error.response.status || 500,
+            status: error.response.status || 500, // Código de estado del error
         };
     } else if (error.request) {
+        // No se recibió respuesta, retornamos un mensaje de error genérico
         return {
             message: 'No se pudo conectar con el servidor',
-            status: 503,
+            status: 503, // Error de servicio no disponible
         };
     } else {
+        // Otro tipo de error, retornamos el mensaje del error
         return {
             message: error.message || 'Error desconocido',
             status: 500,
@@ -55,7 +57,7 @@ export const getUserById = async (id, token) => {
     try {
         const response = await api.get(`/user/${id}`, {
             headers: {
-                'auth-token': token,
+                Authorization: `Bearer ${token}`,
             },
         });
         return response.data;
@@ -81,7 +83,7 @@ export const createProduct = async (productData, token) => {
     try {
         const response = await api.post('/products', productData, {
             headers: {
-                'auth-token': token,
+                Authorization: `Bearer ${token}`,
             },
         });
         return response.data;
@@ -96,7 +98,7 @@ export const getAllProducts = async (token) => {
     try {
         const response = await api.get('/products', {
             headers: {
-                'auth-token': token,
+                Authorization: `Bearer ${token}`,
             },
         });
         return response.data;
@@ -111,7 +113,7 @@ export const updateProduct = async (id, productData, token) => {
     try {
         const response = await api.put(`/products/${id}`, productData, {
             headers: {
-                'auth-token': token,
+                Authorization: `Bearer ${token}`,
             },
         });
         return response.data;
@@ -126,7 +128,7 @@ export const deleteProduct = async (id, token) => {
     try {
         const response = await api.delete(`/products/${id}`, {
             headers: {
-                'auth-token': token,
+                Authorization: `Bearer ${token}`,
             },
         });
         return response.data;

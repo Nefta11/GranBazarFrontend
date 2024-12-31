@@ -17,7 +17,8 @@ const Login = () => {
     const navigate = useNavigate();
     const authData = useSelector((state) => state.auth);
 
-    useEffect(() => { }, [authData, dispatch]);
+    useEffect(() => {
+    }, [authData, dispatch]);
 
     const validateEmail = (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -56,7 +57,7 @@ const Login = () => {
             Swal.fire('Éxito', 'Inicio de sesión exitoso', 'success');
             navigate('/Home');
         } catch (error) {
-            Swal.fire('Error', error.message || 'Error en la autenticación', 'error');
+            Swal.fire('Error', 'Error en la autenticación', 'error');
         }
     };
 
@@ -85,14 +86,14 @@ const Login = () => {
                     <div className="form-options">
                         <div>
                             <input type="checkbox" id="remember-me" />
-                            <label htmlFor="remember-me">Recordarme</label>
+                            <label  htmlFor="remember-me">Recordarme</label>
                         </div>
                         <Link to="#" className="forgot-password">
                             Olvidaste tu contraseña?
                         </Link>
                     </div>
                     <button type="submit" className="login-button">Iniciar sesión</button>
-                    {/* <GoogleB /> */}
+                    <GoogleB />
                     <p className="signup-text">
                         ¿No tienes una cuenta?<Link to="/Register" className="signup-link"> Registrarse</Link>
                     </p>
