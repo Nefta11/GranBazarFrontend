@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080/api', 
+    baseURL: 'http://localhost:8080/api',
     headers: {
         'Content-Type': 'application/json',
     },
@@ -41,16 +41,17 @@ export const registerUser = async (userData) => {
     }
 };
 
-// Autenticación de usuario
 export const authUser = async (credentials) => {
     try {
         const response = await api.post('/auth', credentials);
-        return response.data;
+        const token = response.headers['auth-token']; // Extrae el token de los headers
+        return { ...response.data, token }; // Combina datos y token en un solo objeto
     } catch (error) {
         console.error('Error autenticando usuario:', error);
         throw handleError(error);
     }
 };
+
 
 // Obtener usuario por ID
 export const getUserById = async (id, token) => {
