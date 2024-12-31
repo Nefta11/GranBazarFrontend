@@ -51,7 +51,7 @@ export const authUser = async (credentials) => {
         throw handleError(error);
     }
 };
- 
+
 // Obtener usuario por ID
 export const getUserById = async (id, token) => {
     try {
