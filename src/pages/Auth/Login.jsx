@@ -86,14 +86,14 @@ const Login = () => {
                     <div className="form-options">
                         <div>
                             <input type="checkbox" id="remember-me" />
-                            <label  htmlFor="remember-me">Recordarme</label>
+                            <label htmlFor="remember-me">Recordarme</label>
                         </div>
                         <Link to="#" className="forgot-password">
                             Olvidaste tu contraseña?
                         </Link>
                     </div>
                     <button type="submit" className="login-button">Iniciar sesión</button>
-                    <GoogleB />
+                    { /* <GoogleB />*/}
                     <p className="signup-text">
                         ¿No tienes una cuenta?<Link to="/Register" className="signup-link"> Registrarse</Link>
                     </p>
