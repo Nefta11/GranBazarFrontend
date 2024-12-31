@@ -54,6 +54,7 @@ const Login = () => {
         try {
             const response = await authUser({ email, password });
             dispatch(logIn(response));
+            localStorage.setItem("tokenUser", JSON.stringify(response));
             Swal.fire('Éxito', 'Inicio de sesión exitoso', 'success');
             navigate('/Home');
         } catch (error) {
@@ -75,12 +76,12 @@ const Login = () => {
                 <form className="login-form" onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="email" className='em'>Correo electrónico: </label>
-                        <input type="email" id="email" value={email} onChange={handleEmailChange} />
+                        <input type="email" id="email" value={email} onChange={handleEmailChange} autoComplete="email" />
                         {emailValid && <span className="valid-check">✔️</span>}
                     </div>
                     <div className="form-group">
                         <label htmlFor="password" className='ps'>Contraseña:</label>
-                        <input type="password" id="password" value={password} onChange={handlePasswordChange} />
+                        <input type="password" id="password" value={password} onChange={handlePasswordChange} autoComplete="current-password" />
                         {passwordValid && <span className="valid-check">✔️</span>}
                     </div>
                     <div className="form-options">
