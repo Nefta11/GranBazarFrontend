@@ -7,6 +7,7 @@ const initState = {
     session: false,
     token: null,
     name: "",
+    user: null, // Añadir campo para los datos del usuario
 };
 
 // Slice de autenticación
@@ -15,7 +16,13 @@ export const authSlice = createSlice({
     initialState: initState,
     reducers: {
         logIn: (state, action) => {
-            const newState = { ...state, ...action.payload, session: true };
+            const newState = { 
+                ...state, 
+                ...action.payload, 
+                session: true,
+                token: action.payload.token, // Asegúrate de que el token se guarde
+                user: action.payload.user // Guarda los datos del usuario
+            };
             return newState;
         },
         logOut: () => {

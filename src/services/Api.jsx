@@ -155,7 +155,7 @@ const deleteProduct = async (id, token) => {
     }
 };
 
-export default {
+export {
     register,
     auth,
     getUser,

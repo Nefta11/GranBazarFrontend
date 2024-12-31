@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import '../../assets/styles/stylesPages/AuthStyles/Login.css';
 import GoogleB from '../../components/AuthComponents/GoogleB';
-import { authUser } from '../../services/Api';
+import { auth } from '../../services/Api';  // Aquí importas la API de autenticación
 import { logIn } from '../../features/authSlice';
 
 const Login = () => {
@@ -52,24 +52,23 @@ const Login = () => {
             return;
         }
         try {
-            const response = await authUser({ email, password });
+            const response = await auth(email, password); // Aquí se usa la API que importaste
 
             // Extrae el token de los headers y lo agrega a la respuesta
-            const { token, ...userData } = response;
+            const { token, user } = response;
 
             // Ahora pasa el token junto con los datos del usuario al dispatch
-            dispatch(logIn({ ...userData, token }));
+            dispatch(logIn({ ...user, token }));
 
-            // Guarda el token en el localStorage
-            localStorage.setItem("tokenUser", JSON.stringify({ ...userData, token }));
+            // Guarda el token y los datos del usuario en el localStorage
+            localStorage.setItem("tokenUser", JSON.stringify({ token, user }));
 
             Swal.fire('Éxito', 'Inicio de sesión exitoso', 'success');
             navigate('/Home');
         } catch (error) {
-            Swal.fire('Error', 'Error en la autenticación', 'error');
+            Swal.fire('Error', error.message, 'error');
         }
     };
-
 
     return (
         <div className="login-container">
