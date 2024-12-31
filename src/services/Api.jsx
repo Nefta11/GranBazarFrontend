@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080/api',
+    baseURL: 'http://localhost:8080/api', // URL de la API
     headers: {
         'Content-Type': 'application/json',
     },
@@ -30,111 +30,138 @@ const handleError = (error) => {
     }
 };
 
-// Registro de usuario
-export const registerUser = async (userData) => {
+// Función para registrar un nuevo usuario
+const register = async (userData) => {
     try {
         const response = await api.post('/register', userData);
-        return response.data;
+        return response.data; // Retorna la información del usuario creado
     } catch (error) {
-        console.error('Error registrando usuario:', error);
-        throw handleError(error);
+        const { message, status } = handleError(error);
+        const customError = new Error(message);
+        customError.status = status;
+        throw customError;
     }
 };
 
-export const authUser = async (credentials) => {
+// Función para iniciar sesión
+const auth = async (email, password) => {
     try {
-        const response = await api.post('/auth', credentials);
-        const token = response.headers['auth-token']; // Extrae el token de los headers
-        return { ...response.data, token }; // Combina datos y token en un solo objeto
+        const response = await api.post('/auth', { email, password });
+        const token = response.headers['auth-token']; // Extraer el token del encabezado
+        return { user: response.data, token };
     } catch (error) {
-        console.error('Error autenticando usuario:', error);
-        throw handleError(error);
+        const { message, status } = handleError(error);
+        const customError = new Error(message);
+        customError.status = status;
+        throw customError;
     }
 };
 
-
-// Obtener usuario por ID
-export const getUserById = async (id, token) => {
+// Función para obtener un usuario por ID (requiere token)
+const getUser = async (id, token) => {
     try {
         const response = await api.get(`/user/${id}`, {
             headers: {
-                Authorization: `Bearer ${token}`,
+                'auth-token': token, // Enviar el token en los encabezados
             },
         });
         return response.data;
     } catch (error) {
-        console.error('Error obteniendo usuario:', error);
-        throw handleError(error);
+        const { message, status } = handleError(error);
+        const customError = new Error(message);
+        customError.status = status;
+        throw customError;
     }
 };
 
-// Autenticación con Google
-export const googleAuth = async (tokenId) => {
+// Función para autenticarse con Google
+const googleAuth = async (tokenId) => {
     try {
         const response = await api.post('/google-auth', { tokenId });
         return response.data;
     } catch (error) {
-        console.error('Error en autenticación con Google:', error);
-        throw handleError(error);
+        const { message, status } = handleError(error);
+        const customError = new Error(message);
+        customError.status = status;
+        throw customError;
     }
 };
 
-// Crear producto
-export const createProduct = async (productData, token) => {
+// Función para crear un nuevo producto (requiere token)
+const createProduct = async (productData, token) => {
     try {
         const response = await api.post('/products', productData, {
             headers: {
-                Authorization: `Bearer ${token}`,
+                'auth-token': token, // Enviar el token en los encabezados
             },
         });
         return response.data;
     } catch (error) {
-        console.error('Error creando producto:', error);
-        throw handleError(error);
+        const { message, status } = handleError(error);
+        const customError = new Error(message);
+        customError.status = status;
+        throw customError;
     }
 };
 
-// Obtener todos los productos
-export const getAllProducts = async (token) => {
+// Función para obtener todos los productos (requiere token)
+const getAllProducts = async (token) => {
     try {
         const response = await api.get('/products', {
             headers: {
-                Authorization: `Bearer ${token}`,
+                'auth-token': token, // Enviar el token en los encabezados
             },
         });
         return response.data;
     } catch (error) {
-        console.error('Error obteniendo productos:', error);
-        throw handleError(error);
+        const { message, status } = handleError(error);
+        const customError = new Error(message);
+        customError.status = status;
+        throw customError;
     }
 };
 
-// Actualizar producto
-export const updateProduct = async (id, productData, token) => {
+// Función para actualizar un producto (requiere token)
+const updateProduct = async (id, productData, token) => {
     try {
         const response = await api.put(`/products/${id}`, productData, {
             headers: {
-                Authorization: `Bearer ${token}`,
+                'auth-token': token, // Enviar el token en los encabezados
             },
         });
         return response.data;
     } catch (error) {
-        console.error('Error actualizando producto:', error);
-        throw handleError(error);
+        const { message, status } = handleError(error);
+        const customError = new Error(message);
+        customError.status = status;
+        throw customError;
     }
 };
 
-// Eliminar producto
-export const deleteProduct = async (id, token) => {
+// Función para eliminar un producto (requiere token)
+const deleteProduct = async (id, token) => {
     try {
         const response = await api.delete(`/products/${id}`, {
             headers: {
-                Authorization: `Bearer ${token}`,
+                'auth-token': token, // Enviar el token en los encabezados
             },
         });
         return response.data;
     } catch (error) {
-        console.error('Error eliminando producto:', error);
-        throw handleError(error);
+        const { message, status } = handleError(error);
+        const customError = new Error(message);
+        customError.status = status;
+        throw customError;
     }
+};
+
+export default {
+    register,
+    auth,
+    getUser,
+    googleAuth,
+    createProduct,
+    getAllProducts,
+    updateProduct,
+    deleteProduct,
 };
