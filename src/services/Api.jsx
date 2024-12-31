@@ -1,7 +1,8 @@
+// Actualización del API para manejar el cambio en el token
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080/api', 
+    baseURL: 'http://localhost:8080/api',
     headers: {
         'Content-Type': 'application/json',
     },
@@ -10,19 +11,16 @@ const api = axios.create({
 // Función para manejar las respuestas de error
 const handleError = (error) => {
     if (error.response) {
-        // Error con la respuesta de la API, devolvemos el mensaje de error específico
         return {
             message: error.response.data.message || 'Algo salió mal',
-            status: error.response.status || 500, // Código de estado del error
+            status: error.response.status || 500,
         };
     } else if (error.request) {
-        // No se recibió respuesta, retornamos un mensaje de error genérico
         return {
             message: 'No se pudo conectar con el servidor',
-            status: 503, // Error de servicio no disponible
+            status: 503,
         };
     } else {
-        // Otro tipo de error, retornamos el mensaje del error
         return {
             message: error.message || 'Error desconocido',
             status: 500,
@@ -52,14 +50,10 @@ export const authUser = async (credentials) => {
     }
 };
 
-// Obtener usuario por ID
+// Obtener usuario por ID (cambiando cómo se pasa el token)
 export const getUserById = async (id, token) => {
     try {
-        const response = await api.get(`/user/${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const response = await api.post(`/user/${id}`, { token });
         return response.data;
     } catch (error) {
         console.error('Error obteniendo usuario:', error);
@@ -81,11 +75,7 @@ export const googleAuth = async (tokenId) => {
 // Crear producto
 export const createProduct = async (productData, token) => {
     try {
-        const response = await api.post('/products', productData, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const response = await api.post('/products', { ...productData, token });
         return response.data;
     } catch (error) {
         console.error('Error creando producto:', error);
@@ -96,11 +86,7 @@ export const createProduct = async (productData, token) => {
 // Obtener todos los productos
 export const getAllProducts = async (token) => {
     try {
-        const response = await api.get('/products', {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const response = await api.post('/products', { token });
         return response.data;
     } catch (error) {
         console.error('Error obteniendo productos:', error);
@@ -111,11 +97,7 @@ export const getAllProducts = async (token) => {
 // Actualizar producto
 export const updateProduct = async (id, productData, token) => {
     try {
-        const response = await api.put(`/products/${id}`, productData, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const response = await api.put(`/products/${id}`, { ...productData, token });
         return response.data;
     } catch (error) {
         console.error('Error actualizando producto:', error);
@@ -127,9 +109,7 @@ export const updateProduct = async (id, productData, token) => {
 export const deleteProduct = async (id, token) => {
     try {
         const response = await api.delete(`/products/${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
+            data: { token },
         });
         return response.data;
     } catch (error) {
