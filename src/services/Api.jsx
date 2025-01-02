@@ -47,8 +47,8 @@ const register = async (userData) => {
 const auth = async (email, password) => {
     try {
         const response = await api.post('/auth', { email, password });
-        const token = response.headers['auth-token']; // Extraer el token del encabezado
-        return { user: response.data, token };
+        console.log(response.data); // Si todo es correcto, mostrar la data (usuario creado) con fines de depuración por el momento
+        return response.data; // Retorna la información del usuario creado
     } catch (error) {
         const { message, status } = handleError(error);
         const customError = new Error(message);

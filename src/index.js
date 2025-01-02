@@ -10,7 +10,7 @@ const RootComponent = () => {
   const auth = useSelector((state) => state.auth); // Obtén el estado de autenticación
 
   useEffect(() => {
-    const authData = localStorage.getItem("tokenUser");
+    const authData = localStorage.getItem("authData");
     if (authData) {
       const parsedData = JSON.parse(authData);
       dispatch(logIn(parsedData));
