@@ -63,11 +63,15 @@ const MenuDesktop = ({ logo }) => {
                     <li><Link to=""><FaFemale /> Mujeres</Link></li>
                     <li><Link to=""><FaMale /> Hombres</Link></li>
                     <li><Link to=""><FaChild /> Niñ@s</Link></li>
-                    <li><a><FaUser className="user-icon" onClick={toggleUserMenu} />Hola{ }
+                    <li>
+                        <button className="user-icon" onClick={toggleUserMenu}>
+                            <FaUser /> Hola
+                        </button>
                         <ul className={`list-user-menu ${userMenuActive ? 'active' : ''}`}>
                             <li><Link to="/Profile"><FaUserCircle /> Mi perfil</Link></li>
-                            <li><a onClick={handleLogOut}><FaSignOutAlt /> Cerrar sesión</a></li>
-                        </ul></a></li>
+                            <li><button onClick={handleLogOut}><FaSignOutAlt /> Cerrar sesión</button></li>
+                        </ul>
+                    </li>
                 </ul>
                 <button className="btn-mobile-menu" onClick={toggleMenu}><FaBars /></button>
             </div>
