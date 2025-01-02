@@ -20,8 +20,8 @@ export const authSlice = createSlice({
                 ...state, 
                 ...action.payload, 
                 session: true,
-                token: action.payload.token, // Asegúrate de que el token se guarde
-                user: action.payload.user // Guarda los datos del usuario
+                token: action.payload.token, 
+                user: action.payload.user 
             };
             return newState;
         },
