@@ -61,7 +61,9 @@ const Login = () => {
             dispatch(logIn({ ...user, token }));
 
             // Guarda el token y los datos del usuario en el localStorage
-            localStorage.setItem("tokenUser", JSON.stringify({ token, user }));
+            const authData = { token, user };
+            localStorage.setItem("authData", JSON.stringify(authData));
+            console.log("Datos guardados en localStorage:", authData);
 
             Swal.fire('Éxito', 'Inicio de sesión exitoso', 'success');
             navigate('/Home');

@@ -5,29 +5,40 @@ import store from "./store/store";
 import App from "./App";
 import { logIn } from "../src/features/authSlice";
 
+// Función reutilizable para cargar datos desde localStorage
+const loadAuthDataFromStorage = () => {
+  try {
+    const authData = localStorage.getItem("authData");
+    return authData ? JSON.parse(authData) : null;
+  } catch (error) {
+    console.error("Error leyendo authData de localStorage:", error);
+    return null;
+  }
+};
+
 const RootComponent = () => {
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth); // Obtén el estado de autenticación
+  const token = useSelector((state) => state.auth.token); // Solo seleccionamos el token
 
+  // Cargar datos de autenticación al montar el componente
   useEffect(() => {
-    const authData = localStorage.getItem("authData");
+    const authData = loadAuthDataFromStorage();
     if (authData) {
-      const parsedData = JSON.parse(authData);
-      dispatch(logIn(parsedData));
-      console.log("parsedData", parsedData);
+      dispatch(logIn(authData));
+      console.log("Datos cargados desde localStorage:", authData);
+    } else {
+      console.log("No se encontraron datos en localStorage");
     }
   }, [dispatch]);
 
-  // Verificación del token y logging
-  const token = auth.token;
-
+  // Verificar el token y realizar acciones condicionales
   useEffect(() => {
     if (token) {
-      console.log("Siuu Ya hay token y es :", token);
+      console.log("Siuu Ya hay token y es:", token);
     } else {
-      console.log("No hay token Terrible");
+      console.log("No hay token. Terrible.");
     }
-  }, [token]); // Se ejecuta cada vez que el token cambia
+  }, [token]);
 
   return <App />;
 };

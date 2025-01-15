@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 // Estado inicial para autenticación
 const initState = {
@@ -7,23 +7,22 @@ const initState = {
     session: false,
     token: null,
     name: "",
-    user: null, // Añadir campo para los datos del usuario
+    email: "",
 };
 
 // Slice de autenticación
 export const authSlice = createSlice({
-    name: 'auth',
+    name: "auth",
     initialState: initState,
     reducers: {
         logIn: (state, action) => {
-            const newState = { 
-                ...state, 
-                ...action.payload, 
-                session: true,
-                token: action.payload.token, 
-                user: action.payload.user 
-            };
-            return newState;
+            const { id, type, token, name, email } = action.payload || {};
+            state.id = id || state.id;
+            state.type = type || state.type;
+            state.session = true;
+            state.token = token;
+            state.name = name;
+            state.email = email;
         },
         logOut: () => {
             return initState; // Restaura el estado inicial
@@ -31,6 +30,6 @@ export const authSlice = createSlice({
     },
 });
 
-// Exportar las acciones
+// Exportar las acciones y el reducer
 export const { logIn, logOut } = authSlice.actions;
 export default authSlice.reducer;

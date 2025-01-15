@@ -28,7 +28,17 @@ const GoogleB = () => {
             const { tokenId } = response;
             const userData = await googleAuth(tokenId);
             const userInfo = await getUserInfo(tokenId);
-            dispatch(logIn({ ...userData, ...userInfo }));
+            const token = userData.token;
+
+            // Combina los datos del usuario y el token
+            const authData = { ...userData, ...userInfo, token };
+
+            // Guarda los datos de autenticación en el localStorage
+            localStorage.setItem("authData", JSON.stringify(authData));
+            console.log("Datos guardados en localStorage:", authData);
+
+            // Despacha la acción de inicio de sesión
+            dispatch(logIn(authData));
             navigate('/Home');
         } catch (error) {
             console.error('Error en la autenticación con Google:', error);
