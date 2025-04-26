@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import '../assets/styles/stylesComponents/menu.css';
-import { FaHome, FaFemale, FaChild, FaMale, FaBars, FaUser, FaSun, FaMoon, FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
+import { FaFemale, FaChild, FaMale, FaBars, FaUser, FaSun, FaMoon, FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
