@@ -5,6 +5,7 @@ import { FiUser, FiMail, FiPhone, FiCalendar, FiLock, FiEye, FiEyeOff } from 're
 import Swal from 'sweetalert2';
 import '../../assets/styles/stylesPages/AuthStyles/Register.css';
 import { register } from '../../services/Api';
+import { format } from 'date-fns';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -226,9 +227,11 @@ const Register = () => {
                 last_name: lastName,
                 email,
                 phone,
-                birthday,
+                birthday: format(new Date(birthday), 'dd/MM/yyyy'), // Formatear la fecha al formato esperado por la API
                 password
             };
+
+            console.log('Datos enviados a la API:', userData); // Agregar un console.log para verificar los datos enviados
 
             await register(userData);
 
