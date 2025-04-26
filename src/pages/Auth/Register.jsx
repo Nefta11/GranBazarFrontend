@@ -1,4 +1,3 @@
-import React from 'react';
 import '../../assets/styles/stylesPages/AuthStyles/Register.css';
 import GoogleB from '../../components/AuthComponents/GoogleB';
 import { Link } from 'react-router-dom';

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import '../assets/styles/stylesPages/main-view.css';
 import logoGranBazar from '../assets/images/Gran-Bazar-removebg-preview (2).png';
