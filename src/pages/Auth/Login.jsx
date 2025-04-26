@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import '../../assets/styles/stylesPages/AuthStyles/Login.css';
-import GoogleB from '../../components/AuthComponents/GoogleB';
+//import GoogleB from '../../components/AuthComponents/GoogleB';
 import { auth } from '../../services/Api';  // Aquí importas la API de autenticación
 import { logIn } from '../../features/authSlice';
 
