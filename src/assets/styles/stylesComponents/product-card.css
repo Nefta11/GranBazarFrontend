@@ -1,0 +1,293 @@
+/* Estilos para el componente ProductCard manteniendo la base existente */
+
+/* Actualizaciones para la tarjeta de producto existente */
+.product-placeholder {
+    background-color: var(--background-color);
+    border-radius: var(--border-radius);
+    padding: 15px;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.product-placeholder:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Badges mejorados */
+.product-badge-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.product-badge {
+    font-size: 1.4rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.product-badge.new {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.product-badge.limited {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.product-badge.sold-out {
+    background-color: #e74c3c;
+    color: white;
+}
+
+/* Imagen con efecto hover */
+.product-image-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    border-radius: 8px;
+}
+
+.product-placeholder:hover .product-image {
+    transform: scale(1.05);
+}
+
+/* Botones de acción */
+.product-actions {
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    transition: bottom 0.3s ease;
+}
+
+.product-placeholder:hover .product-actions {
+    bottom: 0;
+}
+
+.action-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.4rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.action-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Información de producto mejorada */
+.product-category {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.product-title {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+    color: var(--text-color);
+    line-height: 1.3;
+}
+
+.product-description {
+    font-size: 1.4rem;
+    color: var(--text-color);
+    opacity: 0.8;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    flex-grow: 1;
+}
+
+/* Mejora en sistema de rating */
+.product-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.product-rating {
+    display: flex;
+    align-items: center;
+}
+
+.star-icon {
+    color: #ddd;
+    font-size: 1.4rem;
+    margin-right: 2px;
+}
+
+.star-icon.filled,
+.star-icon.half {
+    color: var(--secondary-color);
+}
+
+.rating-value {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-left: 5px;
+    color: var(--text-color);
+}
+
+.product-stock {
+    font-size: 1.3rem;
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+/* Manteniendo estilo de precio original pero con formato mejorado */
+.price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.old-price {
+    font-size: 1.6rem;
+    color: #999;
+    text-decoration: line-through;
+    margin-right: 10px;
+}
+
+/* Grid de productos manteniendo el estilo existente */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+    width: 100%;
+    padding: 20px;
+}
+
+/* Loader para productos */
+.products-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 200px;
+}
+
+.loader {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid var(--primary-color);
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Mensaje de error */
+.error-message {
+    text-align: center;
+    color: #e74c3c;
+    font-size: 1.8rem;
+    padding: 20px;
+    background-color: rgba(231, 76, 60, 0.1);
+    border-radius: var(--border-radius);
+    margin: 20px;
+}
+
+/* Mensaje de sin productos */
+.no-products {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.8rem;
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+/* Manteniendo los estilos responsivos existentes */
+@media (max-width: 1024px) {
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    }
+
+    .product-image-container {
+        height: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    .product-image-container {
+        height: 160px;
+    }
+
+    .product-title {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 580px) {
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+    }
+
+    .product-image-container {
+        height: 140px;
+    }
+
+    .product-title {
+        font-size: 1.5rem;
+    }
+
+    .product-description {
+        font-size: 1.3rem;
+    }
+
+    .price {
+        font-size: 1.8rem;
+    }
+}

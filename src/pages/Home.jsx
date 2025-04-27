@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { motion } from 'framer-motion';
 import '../assets/styles/stylesPages/main-view.css';
@@ -6,18 +6,54 @@ import logoGranBazar from '../assets/images/Gran-Bazar-removebg-preview (2).png'
 import MenuDesktop from '../components/MenuDesktop';
 import MenuMobile from '../components/MenuMobile';
 import Footer from '../components/Footer';
-import { FaGift, FaFire, FaStar, FaThumbsUp } from 'react-icons/fa';
+import { FaGift, FaFire, FaStar, FaThumbsUp, FaSpinner, FaSearch } from 'react-icons/fa';
+import ProductCard from '../components/ProductCard';
+import { getAllProducts } from '../services/Api';
 
 const Home = () => {
     const dispatch = useDispatch();
     const authData = useSelector((state) => state.auth);
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
+    const [activeCategory, setActiveCategory] = useState(0); // 0 significa todas las categorías
 
     useEffect(() => {
         console.log("Datos guardados en Redux:", authData);
-
         // Efecto de scroll suave
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [authData, dispatch]);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                setLoading(true);
+                const storedAuthData = localStorage.getItem('authData');
+                if (!storedAuthData) {
+                    throw new Error('No hay sesión activa');
+                }
+
+                const parsedAuthData = JSON.parse(storedAuthData);
+                const token = parsedAuthData?.token;
+
+                if (!token) {
+                    throw new Error('Token no disponible');
+                }
+
+                console.log('Token obtenido:', token); // Depuración del token
+                const productsData = await getAllProducts(token);
+                setProducts(productsData);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error al obtener los productos:', error);
+                setError('No se pudieron cargar los productos. Por favor intenta de nuevo.');
+                setLoading(false);
+            }
+        };
+
+        fetchProducts();
+    }, []);
 
     // Animaciones
     const containerVariants = {
@@ -41,6 +77,42 @@ const Home = () => {
         }
     };
 
+    // Filtrar productos
+    const filterProducts = () => {
+        return products.filter(product => {
+            const matchesSearch = searchTerm === '' ||
+                product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                product.description.toLowerCase().includes(searchTerm.toLowerCase());
+
+            const matchesCategory = activeCategory === 0 || parseInt(product.category_id) === activeCategory;
+
+            return matchesSearch && matchesCategory;
+        });
+    };
+
+    // Categorías disponibles
+    const categories = [
+        { id: 0, name: 'Todos' },
+        { id: 1, name: 'Hombres' },
+        { id: 2, name: 'Mujeres' },
+        { id: 3, name: 'Niñ@s' },
+        { id: 4, name: 'Unisex' },
+        { id: 5, name: 'Accesorios' },
+        { id: 6, name: 'Deportiva' },
+        { id: 7, name: 'Infantil' },
+        { id: 8, name: 'Juvenil' }
+    ];
+
+    // Función para obtener destacados (productos con mayor rating)
+    const getFeaturedProducts = () => {
+        return [...products]
+            .sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating))
+            .slice(0, 4);
+    };
+
+    const filteredProducts = filterProducts();
+    const featuredProducts = products.length > 0 ? getFeaturedProducts() : [];
+
     return (
         <div className="home-container">
             <header>
@@ -61,165 +133,95 @@ const Home = () => {
                     </div>
                 </div>
 
-                <motion.section className="featured-section" variants={sectionVariants}>
-                    <div className="section-header">
-                        <FaGift className="section-icon" />
-                        <h1 className="title-section">Ofertas de HASTA un 80%</h1>
+                {loading ? (
+                    <div className="products-loader">
+                        <div className="loader"></div>
                     </div>
-                    <div className="oferts section">
-                        <div className="product-placeholder">
-                            <div className="product-image"></div>
-                            <h3>Producto en oferta</h3>
-                            <p className="price"><span className="old-price">$1200</span> $600</p>
-                            <span className="discount-badge">-50%</span>
-                        </div>
-                        <div className="product-placeholder">
-                            <div className="product-image"></div>
-                            <h3>Producto en oferta</h3>
-                            <p className="price"><span className="old-price">$2500</span> $500</p>
-                            <span className="discount-badge">-80%</span>
-                        </div>
-                        <div className="product-placeholder">
-                            <div className="product-image"></div>
-                            <h3>Producto en oferta</h3>
-                            <p className="price"><span className="old-price">$1800</span> $900</p>
-                            <span className="discount-badge">-50%</span>
-                        </div>
-                        <div className="product-placeholder">
-                            <div className="product-image"></div>
-                            <h3>Producto en oferta</h3>
-                            <p className="price"><span className="old-price">$2200</span> $990</p>
-                            <span className="discount-badge">-55%</span>
-                        </div>
-                    </div>
-                </motion.section>
+                ) : error ? (
+                    <div className="error-message">{error}</div>
+                ) : (
+                    <>
+                        {featuredProducts.length > 0 && (
+                            <motion.section className="featured-section" variants={sectionVariants}>
+                                <div className="section-header">
+                                    <FaStar className="section-icon" />
+                                    <h2 className="title-section">Productos Destacados</h2>
+                                </div>
+                                <div className="section featured-grid">
+                                    {featuredProducts.map((product) => (
+                                        <ProductCard
+                                            key={`featured-${product.id}`}
+                                            id={product.id}
+                                            name={product.name}
+                                            description={product.description}
+                                            price={parseFloat(product.price)}
+                                            stock={product.stock}
+                                            category_id={product.category_id}
+                                            image={product.image}
+                                            status={product.status}
+                                            rating={parseFloat(product.rating)}
+                                        />
+                                    ))}
+                                </div>
+                            </motion.section>
+                        )}
 
-                <motion.section className="category-section" variants={sectionVariants}>
-                    <div className="section-header">
-                        <FaFire className="section-icon" />
-                        <h2 className="title-section">Lo más nuevo</h2>
-                    </div>
-                    <div className="most-new section">
-                        <div className="product-placeholder">
-                            <div className="product-image"></div>
-                            <h3>Nuevo producto</h3>
-                            <p className="price">$1350</p>
-                            <span className="new-badge">Nuevo</span>
-                        </div>
-                        <div className="product-placeholder">
-                            <div className="product-image"></div>
-                            <h3>Nuevo producto</h3>
-                            <p className="price">$2100</p>
-                            <span className="new-badge">Nuevo</span>
-                        </div>
-                        <div className="product-placeholder">
-                            <div className="product-image"></div>
-                            <h3>Nuevo producto</h3>
-                            <p className="price">$800</p>
-                            <span className="new-badge">Nuevo</span>
-                        </div>
-                        <div className="product-placeholder">
-                            <div className="product-image"></div>
-                            <h3>Nuevo producto</h3>
-                            <p className="price">$1700</p>
-                            <span className="new-badge">Nuevo</span>
-                        </div>
-                    </div>
-                </motion.section>
+                        <motion.section className="category-section" variants={sectionVariants}>
+                            <div className="section-header">
+                                <FaFire className="section-icon" />
+                                <h2 className="title-section">Todos los Productos</h2>
+                            </div>
 
-                <motion.section className="category-section" variants={sectionVariants}>
-                    <div className="section-header">
-                        <FaStar className="section-icon" />
-                        <h2 className="title-section">Lo más solicitado</h2>
-                    </div>
-                    <div className="most-requested section">
-                        <div className="product-placeholder">
-                            <div className="product-image"></div>
-                            <h3>Producto popular</h3>
-                            <p className="price">$1500</p>
-                            <div className="rating">
-                                <span className="star">★</span>
-                                <span className="star">★</span>
-                                <span className="star">★</span>
-                                <span className="star">★</span>
-                                <span className="star">★</span>
-                                <span className="reviews">(120)</span>
-                            </div>
-                        </div>
-                        <div className="product-placeholder">
-                            <div className="product-image"></div>
-                            <h3>Producto popular</h3>
-                            <p className="price">$2200</p>
-                            <div className="rating">
-                                <span className="star">★</span>
-                                <span className="star">★</span>
-                                <span className="star">★</span>
-                                <span className="star">★</span>
-                                <span className="star half">★</span>
-                                <span className="reviews">(98)</span>
-                            </div>
-                        </div>
-                        <div className="product-placeholder">
-                            <div className="product-image"></div>
-                            <h3>Producto popular</h3>
-                            <p className="price">$1100</p>
-                            <div className="rating">
-                                <span className="star">★</span>
-                                <span className="star">★</span>
-                                <span className="star">★</span>
-                                <span className="star">★</span>
-                                <span className="star">☆</span>
-                                <span className="reviews">(75)</span>
-                            </div>
-                        </div>
-                        <div className="product-placeholder">
-                            <div className="product-image"></div>
-                            <h3>Producto popular</h3>
-                            <p className="price">$1800</p>
-                            <div className="rating">
-                                <span className="star">★</span>
-                                <span className="star">★</span>
-                                <span className="star">★</span>
-                                <span className="star">★</span>
-                                <span className="star">★</span>
-                                <span className="reviews">(152)</span>
-                            </div>
-                        </div>
-                    </div>
-                </motion.section>
+                            <div className="filters-section">
+                                <div className="search-container">
+                                    <FaSearch className="search-icon" />
+                                    <input
+                                        type="text"
+                                        placeholder="Buscar productos..."
+                                        className="search-input"
+                                        value={searchTerm}
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                    />
+                                </div>
 
-                <motion.section className="category-section" variants={sectionVariants}>
-                    <div className="section-header">
-                        <FaThumbsUp className="section-icon" />
-                        <h2 className="title-section">Lo más recomendado</h2>
-                    </div>
-                    <div className="recommended section">
-                        <div className="product-placeholder">
-                            <div className="product-image"></div>
-                            <h3>Producto recomendado</h3>
-                            <p className="price">$1900</p>
-                            <span className="recommendation-badge">Recomendado</span>
-                        </div>
-                        <div className="product-placeholder">
-                            <div className="product-image"></div>
-                            <h3>Producto recomendado</h3>
-                            <p className="price">$2500</p>
-                            <span className="recommendation-badge">Recomendado</span>
-                        </div>
-                        <div className="product-placeholder">
-                            <div className="product-image"></div>
-                            <h3>Producto recomendado</h3>
-                            <p className="price">$800</p>
-                            <span className="recommendation-badge">Recomendado</span>
-                        </div>
-                        <div className="product-placeholder">
-                            <div className="product-image"></div>
-                            <h3>Producto recomendado</h3>
-                            <p className="price">$1600</p>
-                            <span className="recommendation-badge">Recomendado</span>
-                        </div>
-                    </div>
-                </motion.section>
+                                <div className="categories-filter">
+                                    {categories.map(category => (
+                                        <button
+                                            key={category.id}
+                                            className={`category-button ${activeCategory === category.id ? 'active' : ''}`}
+                                            onClick={() => setActiveCategory(category.id)}
+                                        >
+                                            {category.name}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {filteredProducts.length === 0 ? (
+                                <div className="no-products">
+                                    No se encontraron productos que coincidan con tu búsqueda.
+                                </div>
+                            ) : (
+                                <div className="section">
+                                    {filteredProducts.map((product) => (
+                                        <ProductCard
+                                            key={product.id}
+                                            id={product.id}
+                                            name={product.name}
+                                            description={product.description}
+                                            price={parseFloat(product.price)}
+                                            stock={product.stock}
+                                            category_id={product.category_id}
+                                            image={product.image}
+                                            status={product.status}
+                                            rating={parseFloat(product.rating)}
+                                        />
+                                    ))}
+                                </div>
+                            )}
+                        </motion.section>
+                    </>
+                )}
             </motion.main>
 
             <Footer />
