@@ -27,8 +27,7 @@ const MyProfile = () => {
                 last_name: authData.last_name || '',
                 email: authData.email || '',
                 phone: authData.phone || '',
-                birthday: authData.birthday || '',
-                birthday_unix: authData.birthday_unix || ''
+                birthday: authData.birthday || ''
             });
             setLoading(false);
         } else {
@@ -79,76 +78,6 @@ const MyProfile = () => {
             setError('No pudimos cargar tus datos. Por favor intenta de nuevo.');
             setLoading(false);
         }
-    };
-
-    // Función para convertir la fecha de nacimiento a formato legible
-    const formatBirthday = (dateString) => {
-        // Verificar si userData existe
-        if (!userData) return '';
-
-        // Si tenemos un timestamp unix (segundos desde 1970)
-        if (userData.birthday_unix) {
-            const unixTimestamp = parseInt(userData.birthday_unix);
-            if (isNaN(unixTimestamp)) {
-                console.warn('Timestamp unix inválido:', userData.birthday_unix);
-                return 'Fecha no disponible';
-            }
-
-            const date = new Date(unixTimestamp * 1000);
-
-            // Verificar que la fecha sea válida
-            if (isNaN(date.getTime())) {
-                console.warn('Fecha inválida desde timestamp:', date);
-                return 'Fecha no disponible';
-            }
-
-            // Array de nombres de meses en español
-            const months = [
-                'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
-                'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
-            ];
-
-            const day = date.getDate();
-            const month = months[date.getMonth()];
-            const year = date.getFullYear();
-
-            return `${day} de ${month} de ${year}`;
-        }
-
-        // Si tenemos un formato DD-MM-YYYY
-        if (dateString && dateString.includes('-')) {
-            try {
-                const [day, month, year] = dateString.split('-');
-
-                // Verificar que sean números válidos
-                if (isNaN(parseInt(day)) || isNaN(parseInt(month)) || isNaN(parseInt(year))) {
-                    console.warn('Componentes de fecha inválidos:', day, month, year);
-                    return 'Fecha no disponible';
-                }
-
-                // Array de nombres de meses en español
-                const months = [
-                    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
-                    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
-                ];
-
-                // Convertir el mes numérico (1-12) a índice de array (0-11)
-                const monthIndex = parseInt(month) - 1;
-                if (monthIndex < 0 || monthIndex >= 12) {
-                    console.warn('Índice de mes fuera de rango:', monthIndex);
-                    return 'Fecha no disponible';
-                }
-
-                const monthName = months[monthIndex];
-
-                return `${day} de ${monthName} de ${year}`;
-            } catch (e) {
-                console.error('Error al procesar la fecha:', e);
-                return 'Fecha no disponible';
-            }
-        }
-
-        return dateString || 'No disponible';
     };
 
     // Extraer iniciales del nombre del usuario de forma segura
@@ -281,7 +210,7 @@ const MyProfile = () => {
                             </div>
                             <div className="info-content">
                                 <h3>Teléfono</h3>
-                                <p>{userData.phone || 'No disponible'}</p>
+                                <p>{userData.phone}</p>
                             </div>
                         </motion.div>
 
@@ -291,7 +220,7 @@ const MyProfile = () => {
                             </div>
                             <div className="info-content">
                                 <h3>Fecha de nacimiento</h3>
-                                <p>{formatBirthday(userData.birthday)}</p>
+                                <p>{userData.birthday}</p>
                             </div>
                         </motion.div>
                     </div>

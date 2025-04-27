@@ -93,7 +93,18 @@ const getUser = async (id) => {
         });
 
         console.log('Respuesta de getUser:', response.data);
-        return response.data;
+
+        // Retornar los datos del usuario directamente como están en la API
+        return {
+            user: {
+                id: response.data.id,
+                name: response.data.name,
+                last_name: response.data.last_name,
+                email: response.data.email,
+                phone: response.data.phone,
+                birthday: response.data.birthday
+            }
+        };
     } catch (error) {
         console.error('Error en getUser:', error);
 
