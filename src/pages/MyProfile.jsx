@@ -18,66 +18,43 @@ const MyProfile = () => {
         // Inicializar tema global
         themeManager.initialize();
 
-        // Verificar si ya tenemos datos del usuario en Redux
-        if (authData && authData.id) {
-            console.log("Usando datos de usuario desde Redux:", authData);
-            setUserData({
-                id: authData.id,
-                name: authData.name || '',
-                last_name: authData.last_name || '',
-                email: authData.email || '',
-                phone: authData.phone || '',
-                birthday: authData.birthday || ''
-            });
-            setLoading(false);
-        } else {
-            // Si no tenemos datos en Redux, intentamos obtenerlos usando la API o localStorage
-            fetchUserData();
-        }
-    }, [authData]);
-
-    const fetchUserData = async () => {
-        console.log("Intentando obtener datos del usuario...");
-        try {
-            setLoading(true);
-
-            // Obtener datos del localStorage como referencia
-            const storedAuthData = localStorage.getItem('authData');
-            const parsedData = storedAuthData ? JSON.parse(storedAuthData) : null;
-            console.log("Datos almacenados en localStorage:", parsedData);
-
-            if (!parsedData || !parsedData.user) {
-                throw new Error('No hay datos de usuario disponibles en localStorage');
-            }
-
-            // Usar el ID almacenado para la petición a la API
-            const userId = parsedData.user.id;
-            console.log(`Obteniendo usuario con ID: ${userId}`);
-
-            // Intentar obtener datos frescos de la API
+        const fetchUserData = async () => {
             try {
-                const apiData = await getUser(userId);
+                setLoading(true);
+                const apiData = await getUser();
                 console.log("Datos obtenidos de la API:", apiData);
-
-                if (apiData && apiData.user) {
-                    setUserData(apiData.user);
+                if (apiData) {
+                    setUserData({
+                        name: apiData.name,
+                        last_name: apiData.last_name,
+                        email: apiData.email,
+                        phone: apiData.phone,
+                        birthday: formatBirthday(apiData.birthday)
+                    });
                 } else {
-                    // Si la API no devuelve datos, usar los de localStorage
-                    console.log("La API no devolvió datos, usando localStorage");
-                    setUserData(parsedData.user);
+                    throw new Error("Datos de usuario no disponibles");
                 }
-            } catch (apiError) {
-                console.error("Error al obtener datos de la API:", apiError);
-                // Si falla la API, usar los datos de localStorage como fallback
-                setUserData(parsedData.user);
+                setLoading(false);
+            } catch (error) {
+                console.error("Error al obtener datos del usuario:", error);
+                setError("No pudimos cargar tus datos. Por favor intenta de nuevo.");
+                setLoading(false);
             }
+        };
 
-            setLoading(false);
-        } catch (err) {
-            console.error('Error al obtener datos del usuario:', err);
-            setError('No pudimos cargar tus datos. Por favor intenta de nuevo.');
-            setLoading(false);
-        }
+        fetchUserData();
+    }, []);
+
+    const formatBirthday = (birthday) => {
+        if (!birthday) return '';
+
+        const [day, month, year] = birthday.split('-');
+        const monthNames = [
+            'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+            'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+        ];
+
+        return `${day} de ${monthNames[parseInt(month, 10) - 1]} de ${year}`;
     };
 
     // Extraer iniciales del nombre del usuario de forma segura
@@ -191,6 +168,16 @@ const MyProfile = () => {
                             <div className="info-content">
                                 <h3>Nombre completo</h3>
                                 <p>{userData.name} {userData.last_name}</p>
+                            </div>
+                        </motion.div>
+
+                        <motion.div className="info-item" variants={itemVariants}>
+                            <div className="info-icon">
+                                <FiUser />
+                            </div>
+                            <div className="info-content">
+                                <h3>Apellido</h3>
+                                <p>{userData.last_name}</p>
                             </div>
                         </motion.div>
 
