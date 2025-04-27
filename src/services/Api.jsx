@@ -47,7 +47,7 @@ const register = async (userData) => {
 const auth = async (email, password) => {
     try {
         const response = await api.post('/auth', { email, password });
-        console.log(response.data); // Si todo es correcto, mostrar la data (usuario creado) con fines de depuración por el momento
+        console.log('Respuesta de auth:', response.data); // Para depuración
         return response.data; // Retorna la información del usuario creado
     } catch (error) {
         const { message, status } = handleError(error);
@@ -57,16 +57,60 @@ const auth = async (email, password) => {
     }
 };
 
-// Función para obtener un usuario por ID (requiere token)
-const getUser = async (id, token) => {
+// Función modificada para obtener un usuario por ID (con mejoras para el manejo de token)
+const getUser = async (id) => {
     try {
+        // Obtener el token del localStorage
+        const storedAuthData = localStorage.getItem('authData');
+        if (!storedAuthData) {
+            throw new Error('No hay sesión activa');
+        }
+
+        const parsedAuthData = JSON.parse(storedAuthData);
+        const token = parsedAuthData.token;
+
+        if (!token) {
+            throw new Error('Token no disponible');
+        }
+
+        // Si no se proporciona un ID, intentar obtenerlo del localStorage
+        if (!id && parsedAuthData.user) {
+            id = parsedAuthData.user.id;
+        }
+
+        if (!id) {
+            // Si aún no hay ID, usar la información del usuario que ya está en localStorage
+            console.log('ID no disponible, usando datos locales');
+            return { user: parsedAuthData.user };
+        }
+
+        console.log(`Obteniendo usuario con ID: ${id}, token: ${token.substring(0, 10)}...`);
+
         const response = await api.get(`/user/${id}`, {
             headers: {
                 'auth-token': token, // Enviar el token en los encabezados
             },
         });
+
+        console.log('Respuesta de getUser:', response.data);
         return response.data;
     } catch (error) {
+        console.error('Error en getUser:', error);
+
+        // Si la API falla, intentar usar los datos almacenados en localStorage
+        try {
+            const storedAuthData = localStorage.getItem('authData');
+            if (storedAuthData) {
+                const parsedAuthData = JSON.parse(storedAuthData);
+                if (parsedAuthData.user) {
+                    console.log('Usando datos de usuario desde localStorage');
+                    return { user: parsedAuthData.user };
+                }
+            }
+        } catch (e) {
+            console.error('Error al obtener datos de localStorage:', e);
+        }
+
         const { message, status } = handleError(error);
         const customError = new Error(message);
         customError.status = status;

@@ -1,28 +1,78 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { FiUser, FiMail, FiPhone, FiCalendar, FiEdit2, FiCamera } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { getUser } from '../services/Api';
 import '../assets/styles/stylesPages/myProfile/MyProfile.css';
 import themeManager from '../utils/themeManager';
+import { useSelector } from 'react-redux';
 
 const MyProfile = () => {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    // Obtener datos de autenticación desde Redux
+    const authData = useSelector((state) => state.auth);
+
     useEffect(() => {
         // Inicializar tema global
         themeManager.initialize();
 
-        // Cargar datos del usuario
-        fetchUserData();
-    }, []);
+        // Verificar si ya tenemos datos del usuario en Redux
+        if (authData && authData.id) {
+            console.log("Usando datos de usuario desde Redux:", authData);
+            setUserData({
+                id: authData.id,
+                name: authData.name || '',
+                last_name: authData.last_name || '',
+                email: authData.email || '',
+                phone: authData.phone || '',
+                birthday: authData.birthday || '',
+                birthday_unix: authData.birthday_unix || ''
+            });
+            setLoading(false);
+        } else {
+            // Si no tenemos datos en Redux, intentamos obtenerlos usando la API o localStorage
+            fetchUserData();
+        }
+    }, [authData]);
 
     const fetchUserData = async () => {
+        console.log("Intentando obtener datos del usuario...");
         try {
             setLoading(true);
-            const data = await getUser();
-            setUserData(data.user);
+
+            // Obtener datos del localStorage como referencia
+            const storedAuthData = localStorage.getItem('authData');
+            const parsedData = storedAuthData ? JSON.parse(storedAuthData) : null;
+            console.log("Datos almacenados en localStorage:", parsedData);
+
+            if (!parsedData || !parsedData.user) {
+                throw new Error('No hay datos de usuario disponibles en localStorage');
+            }
+
+            // Usar el ID almacenado para la petición a la API
+            const userId = parsedData.user.id;
+            console.log(`Obteniendo usuario con ID: ${userId}`);
+
+            // Intentar obtener datos frescos de la API
+            try {
+                const apiData = await getUser(userId);
+                console.log("Datos obtenidos de la API:", apiData);
+
+                if (apiData && apiData.user) {
+                    setUserData(apiData.user);
+                } else {
+                    // Si la API no devuelve datos, usar los de localStorage
+                    console.log("La API no devolvió datos, usando localStorage");
+                    setUserData(parsedData.user);
+                }
+            } catch (apiError) {
+                console.error("Error al obtener datos de la API:", apiError);
+                // Si falla la API, usar los datos de localStorage como fallback
+                setUserData(parsedData.user);
+            }
+
             setLoading(false);
         } catch (err) {
             console.error('Error al obtener datos del usuario:', err);
@@ -33,9 +83,24 @@ const MyProfile = () => {
 
     // Función para convertir la fecha de nacimiento a formato legible
     const formatBirthday = (dateString) => {
+        // Verificar si userData existe
+        if (!userData) return '';
+
         // Si tenemos un timestamp unix (segundos desde 1970)
         if (userData.birthday_unix) {
-            const date = new Date(parseInt(userData.birthday_unix) * 1000);
+            const unixTimestamp = parseInt(userData.birthday_unix);
+            if (isNaN(unixTimestamp)) {
+                console.warn('Timestamp unix inválido:', userData.birthday_unix);
+                return 'Fecha no disponible';
+            }
+
+            const date = new Date(unixTimestamp * 1000);
+
+            // Verificar que la fecha sea válida
+            if (isNaN(date.getTime())) {
+                console.warn('Fecha inválida desde timestamp:', date);
+                return 'Fecha no disponible';
+            }
 
             // Array de nombres de meses en español
             const months = [
@@ -52,22 +117,48 @@ const MyProfile = () => {
 
         // Si tenemos un formato DD-MM-YYYY
         if (dateString && dateString.includes('-')) {
-            const [day, month, year] = dateString.split('-');
+            try {
+                const [day, month, year] = dateString.split('-');
 
-            // Array de nombres de meses en español
-            const months = [
-                'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
-                'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
-            ];
+                // Verificar que sean números válidos
+                if (isNaN(parseInt(day)) || isNaN(parseInt(month)) || isNaN(parseInt(year))) {
+                    console.warn('Componentes de fecha inválidos:', day, month, year);
+                    return 'Fecha no disponible';
+                }
 
-            // Convertir el mes numérico (1-12) a índice de array (0-11)
-            const monthIndex = parseInt(month) - 1;
-            const monthName = months[monthIndex];
+                // Array de nombres de meses en español
+                const months = [
+                    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+                    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+                ];
 
-            return `${day} de ${monthName} de ${year}`;
+                // Convertir el mes numérico (1-12) a índice de array (0-11)
+                const monthIndex = parseInt(month) - 1;
+                if (monthIndex < 0 || monthIndex >= 12) {
+                    console.warn('Índice de mes fuera de rango:', monthIndex);
+                    return 'Fecha no disponible';
+                }
+
+                const monthName = months[monthIndex];
+
+                return `${day} de ${monthName} de ${year}`;
+            } catch (e) {
+                console.error('Error al procesar la fecha:', e);
+                return 'Fecha no disponible';
+            }
         }
 
-        return dateString; // Si no podemos formatear, devolvemos la fecha original
+        return dateString || 'No disponible';
+    };
+
+    // Extraer iniciales del nombre del usuario de forma segura
+    const getUserInitials = () => {
+        if (!userData) return '';
+
+        const firstInitial = userData.name ? userData.name.charAt(0).toUpperCase() : '';
+        const lastInitial = userData.last_name ? userData.last_name.charAt(0).toUpperCase() : '';
+
+        return `${firstInitial}${lastInitial}`;
     };
 
     // Animaciones
@@ -112,6 +203,18 @@ const MyProfile = () => {
         );
     }
 
+    // Si no hay datos de usuario después de cargar, mostrar mensaje
+    if (!userData) {
+        return (
+            <div className="profile-error">
+                <p>No se pudo cargar la información del perfil. Por favor inicia sesión nuevamente.</p>
+                <button onClick={() => window.location.href = '/'} className="retry-button">
+                    Ir a inicio de sesión
+                </button>
+            </div>
+        );
+    }
+
     return (
         <motion.div
             className="profile-container"
@@ -129,13 +232,13 @@ const MyProfile = () => {
                 <div className="profile-avatar-container">
                     <div className="profile-avatar">
                         <span className="profile-initials">
-                            {userData?.name.charAt(0)}{userData?.last_name.charAt(0)}
+                            {getUserInitials()}
                         </span>
                         <button className="avatar-edit-button">
                             <FiCamera />
                         </button>
                     </div>
-                    <h1 className="profile-name">{userData?.name} {userData?.last_name}</h1>
+                    <h1 className="profile-name">{userData.name} {userData.last_name}</h1>
                 </div>
             </div>
 
@@ -158,7 +261,7 @@ const MyProfile = () => {
                             </div>
                             <div className="info-content">
                                 <h3>Nombre completo</h3>
-                                <p>{userData?.name} {userData?.last_name}</p>
+                                <p>{userData.name} {userData.last_name}</p>
                             </div>
                         </motion.div>
 
@@ -168,7 +271,7 @@ const MyProfile = () => {
                             </div>
                             <div className="info-content">
                                 <h3>Correo electrónico</h3>
-                                <p>{userData?.email}</p>
+                                <p>{userData.email}</p>
                             </div>
                         </motion.div>
 
@@ -178,7 +281,7 @@ const MyProfile = () => {
                             </div>
                             <div className="info-content">
                                 <h3>Teléfono</h3>
-                                <p>{userData?.phone}</p>
+                                <p>{userData.phone || 'No disponible'}</p>
                             </div>
                         </motion.div>
 
@@ -188,7 +291,7 @@ const MyProfile = () => {
                             </div>
                             <div className="info-content">
                                 <h3>Fecha de nacimiento</h3>
-                                <p>{formatBirthday(userData?.birthday)}</p>
+                                <p>{formatBirthday(userData.birthday)}</p>
                             </div>
                         </motion.div>
                     </div>

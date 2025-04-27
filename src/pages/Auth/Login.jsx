@@ -13,7 +13,7 @@ const Login = () => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
-        rememberMe: false
+        rememberMe: true // Cambiado a true por defecto para asegurar que se guarden los datos
     });
     const [validation, setValidation] = useState({
         emailValid: false,
@@ -118,16 +118,38 @@ const Login = () => {
         try {
             setIsLoading(true);
             const response = await auth(email, password);
-            const { token, user } = response;
+            console.log('Respuesta de auth:', response);
 
-            // Save to Redux
-            dispatch(logIn({ ...user, token }));
+            // Adaptamos el formato de la respuesta que recibimos
+            // La API devuelve { success, token, message, id, name, email, ... }
+            // Pero necesitamos estructurarlo como { token, user: { id, name, ... } }
 
-            // Save to localStorage if remember me is checked
-            if (formData.rememberMe) {
-                const authDataToSave = { token, user };
-                localStorage.setItem("authData", JSON.stringify(authDataToSave));
+            if (!response || !response.token) {
+                throw new Error('La respuesta no contiene un token válido');
             }
+
+            // Crear un objeto user con los datos que vienen en la respuesta
+            const userData = {
+                id: response.id || null,
+                name: response.name || '',
+                last_name: response.last_name || '',
+                email: response.email || email, // Usamos el email ingresado si no viene en la respuesta
+                phone: response.phone || '',
+                birthday: response.birthday || '',
+                birthday_unix: response.birthday_unix || ''
+            };
+
+            // Guardar en Redux
+            dispatch(logIn({ ...userData, token: response.token }));
+
+            // Guardar en localStorage
+            const authDataToSave = {
+                token: response.token,
+                user: userData
+            };
+
+            console.log('Guardando datos en localStorage:', authDataToSave);
+            localStorage.setItem("authData", JSON.stringify(authDataToSave));
 
             Swal.fire({
                 title: '¡Bienvenido!',
@@ -138,6 +160,7 @@ const Login = () => {
 
             navigate('/Home');
         } catch (error) {
+            console.error('Error durante el login:', error);
             Swal.fire({
                 title: 'Error',
                 text: error.message || 'Ha ocurrido un error al iniciar sesión',
