@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
-import { FiUser, FiMail, FiPhone, FiCalendar, FiEdit2, FiCamera } from 'react-icons/fi';
+import { FiUser, FiMail, FiPhone, FiCalendar, FiEdit2, FiArrowLeft } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { getUser } from '../services/Api';
 import '../assets/styles/stylesPages/myProfile/MyProfile.css';
 import themeManager from '../utils/themeManager';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const MyProfile = () => {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     // Obtener datos de autenticación desde Redux
     const authData = useSelector((state) => state.auth);
@@ -18,43 +20,74 @@ const MyProfile = () => {
         // Inicializar tema global
         themeManager.initialize();
 
-        const fetchUserData = async () => {
-            try {
-                setLoading(true);
-                const apiData = await getUser();
-                console.log("Datos obtenidos de la API:", apiData);
-                if (apiData) {
-                    setUserData({
-                        name: apiData.name,
-                        last_name: apiData.last_name,
-                        email: apiData.email,
-                        phone: apiData.phone,
-                        birthday: formatBirthday(apiData.birthday)
-                    });
-                } else {
-                    throw new Error("Datos de usuario no disponibles");
-                }
-                setLoading(false);
-            } catch (error) {
-                console.error("Error al obtener datos del usuario:", error);
-                setError("No pudimos cargar tus datos. Por favor intenta de nuevo.");
-                setLoading(false);
-            }
-        };
-
         fetchUserData();
     }, []);
 
+    const fetchUserData = async () => {
+        try {
+            setLoading(true);
+            const apiData = await getUser();
+            console.log("Datos obtenidos de la API:", apiData);
+            if (apiData && apiData.name) {
+                setUserData({
+                    name: apiData.name || '',
+                    last_name: apiData.last_name || '',
+                    email: apiData.email || '',
+                    phone: apiData.phone || '',
+                    birthday: apiData.birthday || ''
+                });
+            } else {
+                // Intentar obtener datos de localStorage como respaldo
+                const storedAuthData = localStorage.getItem('authData');
+                if (storedAuthData) {
+                    const parsedData = JSON.parse(storedAuthData);
+                    if (parsedData.user) {
+                        setUserData({
+                            name: parsedData.user.name || '',
+                            last_name: parsedData.user.last_name || '',
+                            email: parsedData.user.email || '',
+                            phone: parsedData.user.phone || '',
+                            birthday: parsedData.user.birthday || ''
+                        });
+                    } else {
+                        throw new Error("Datos de usuario no disponibles");
+                    }
+                } else {
+                    throw new Error("Datos de usuario no disponibles");
+                }
+            }
+            setLoading(false);
+        } catch (error) {
+            console.error("Error al obtener datos del usuario:", error);
+            setError("No pudimos cargar tus datos. Por favor intenta de nuevo.");
+            setLoading(false);
+        }
+    };
+
     const formatBirthday = (birthday) => {
-        if (!birthday) return '';
+        if (!birthday) return 'No disponible';
 
-        const [day, month, year] = birthday.split('-');
-        const monthNames = [
-            'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
-            'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
-        ];
+        // Si el formato es DD/MM/YYYY
+        if (birthday.includes('/')) {
+            const [day, month, year] = birthday.split('/');
+            const monthNames = [
+                'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+                'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+            ];
+            return `${day} de ${monthNames[parseInt(month, 10) - 1]} de ${year}`;
+        }
 
-        return `${day} de ${monthNames[parseInt(month, 10) - 1]} de ${year}`;
+        // Si el formato es DD-MM-YYYY
+        if (birthday.includes('-')) {
+            const [day, month, year] = birthday.split('-');
+            const monthNames = [
+                'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+                'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+            ];
+            return `${day} de ${monthNames[parseInt(month, 10) - 1]} de ${year}`;
+        }
+
+        return birthday;
     };
 
     // Extraer iniciales del nombre del usuario de forma segura
@@ -65,6 +98,10 @@ const MyProfile = () => {
         const lastInitial = userData.last_name ? userData.last_name.charAt(0).toUpperCase() : '';
 
         return `${firstInitial}${lastInitial}`;
+    };
+
+    const handleGoBack = () => {
+        navigate(-1); // Retrocede a la página anterior
     };
 
     // Animaciones
@@ -128,21 +165,18 @@ const MyProfile = () => {
             initial="hidden"
             animate="visible"
         >
-            <div className="profile-header">
-                <div className="profile-cover">
-                    <button className="cover-edit-button">
-                        <FiCamera /> Cambiar portada
-                    </button>
-                </div>
+            <div className="profile-top-bar">
+                <button className="back-button" onClick={handleGoBack}>
+                    <FiArrowLeft /> Volver
+                </button>
+            </div>
 
+            <div className="profile-header-simplified">
                 <div className="profile-avatar-container">
                     <div className="profile-avatar">
                         <span className="profile-initials">
                             {getUserInitials()}
                         </span>
-                        <button className="avatar-edit-button">
-                            <FiCamera />
-                        </button>
                     </div>
                     <h1 className="profile-name">{userData.name} {userData.last_name}</h1>
                 </div>
@@ -155,9 +189,6 @@ const MyProfile = () => {
                 >
                     <div className="card-header">
                         <h2>Información Personal</h2>
-                        <button className="edit-button">
-                            <FiEdit2 /> Editar
-                        </button>
                     </div>
 
                     <div className="profile-info">
@@ -166,8 +197,8 @@ const MyProfile = () => {
                                 <FiUser />
                             </div>
                             <div className="info-content">
-                                <h3>Nombre completo</h3>
-                                <p>{userData.name} {userData.last_name}</p>
+                                <h3>Nombre</h3>
+                                <p>{userData.name}</p>
                             </div>
                         </motion.div>
 
@@ -197,7 +228,7 @@ const MyProfile = () => {
                             </div>
                             <div className="info-content">
                                 <h3>Teléfono</h3>
-                                <p>{userData.phone}</p>
+                                <p>{userData.phone || 'No disponible'}</p>
                             </div>
                         </motion.div>
 
@@ -207,7 +238,7 @@ const MyProfile = () => {
                             </div>
                             <div className="info-content">
                                 <h3>Fecha de nacimiento</h3>
-                                <p>{userData.birthday}</p>
+                                <p>{formatBirthday(userData.birthday)}</p>
                             </div>
                         </motion.div>
                     </div>
