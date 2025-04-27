@@ -110,7 +110,12 @@ const MenuMobile = ({ logo }) => {
             cancelButtonColor: '#d33',
         }).then((result) => {
             if (result.isConfirmed) {
+                // Eliminar el token del localStorage
+                localStorage.removeItem('authData');
+
+                // Despachar la acción de cerrar sesión
                 dispatch(logOut());
+
                 // Redirigir al login
                 window.location.href = '/';
             }
