@@ -5,7 +5,6 @@ import {
     FaFemale,
     FaChild,
     FaMale,
-    FaBars,
     FaUser,
     FaSun,
     FaMoon,
@@ -18,6 +17,7 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
 import { logOut } from '../features/authSlice';
+import themeManager from '../utils/themeManager';
 
 const MenuDesktop = ({ logo }) => {
     const [menuActive, setMenuActive] = useState(false);
@@ -28,28 +28,20 @@ const MenuDesktop = ({ logo }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+        // Inicializar el gestor de tema
+        themeManager.initialize();
 
-        // Use saved preference or system preference
-        const shouldEnableDarkMode = savedDarkMode !== null ? savedDarkMode : userPrefersDark;
+        // Obtener el estado actual del tema
+        const isDarkMode = themeManager.getTheme();
+        setDarkMode(isDarkMode);
 
-        setDarkMode(shouldEnableDarkMode);
-        document.body.classList.toggle('dark-mode', shouldEnableDarkMode);
+        // Añadir detector de clics fuera del menú
+        document.addEventListener('click', handleOutsideClick);
 
-        // Cleanup event listeners
         return () => {
             document.removeEventListener('click', handleOutsideClick);
         };
     }, []);
-
-    useEffect(() => {
-        // Add event listener to detect clicks outside of menus
-        document.addEventListener('click', handleOutsideClick);
-        return () => {
-            document.removeEventListener('click', handleOutsideClick);
-        };
-    }, [userMenuActive]);
 
     const handleOutsideClick = (e) => {
         if (userMenuActive && !e.target.closest('.user-menu-container')) {
@@ -62,10 +54,8 @@ const MenuDesktop = ({ logo }) => {
     };
 
     const toggleDarkMode = () => {
-        const newDarkMode = !darkMode;
+        const newDarkMode = themeManager.toggleTheme();
         setDarkMode(newDarkMode);
-        document.body.classList.toggle('dark-mode', newDarkMode);
-        localStorage.setItem('darkMode', newDarkMode);
     };
 
     const toggleUserMenu = (e) => {

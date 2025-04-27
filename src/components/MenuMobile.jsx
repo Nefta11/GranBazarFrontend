@@ -19,6 +19,7 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
 import { logOut } from '../features/authSlice';
+import themeManager from '../utils/themeManager';
 
 const MenuMobile = ({ logo }) => {
     const [menuActive, setMenuActive] = useState(false);
@@ -29,18 +30,16 @@ const MenuMobile = ({ logo }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+        // Inicializar el gestor de tema
+        themeManager.initialize();
 
-        // Use saved preference or system preference
-        const shouldEnableDarkMode = savedDarkMode !== null ? savedDarkMode : userPrefersDark;
-
-        setDarkMode(shouldEnableDarkMode);
-        document.body.classList.toggle('dark-mode', shouldEnableDarkMode);
+        // Obtener el estado actual del tema
+        const isDarkMode = themeManager.getTheme();
+        setDarkMode(isDarkMode);
     }, []);
 
     useEffect(() => {
-        // Prevent scrolling when menu is open
+        // Prevenir scroll cuando el menú está abierto
         if (menuActive) {
             document.body.style.overflow = 'hidden';
         } else {
@@ -54,22 +53,20 @@ const MenuMobile = ({ logo }) => {
 
     const toggleMenu = () => {
         setMenuActive(!menuActive);
-        // Close user menu when main menu toggles
+        // Cerrar menú de usuario cuando se abre el menú principal
         if (userMenuActive) {
             setUserMenuActive(false);
         }
     };
 
     const toggleDarkMode = () => {
-        const newDarkMode = !darkMode;
+        const newDarkMode = themeManager.toggleTheme();
         setDarkMode(newDarkMode);
-        document.body.classList.toggle('dark-mode', newDarkMode);
-        localStorage.setItem('darkMode', newDarkMode);
     };
 
     const toggleUserMenu = () => {
         setUserMenuActive(!userMenuActive);
-        // Close main menu when user menu toggles
+        // Cerrar menú principal cuando se abre el menú de usuario
         if (menuActive) {
             setMenuActive(false);
         }
@@ -77,7 +74,7 @@ const MenuMobile = ({ logo }) => {
 
     const toggleSearch = () => {
         setSearchActive(!searchActive);
-        // Close menus when search is active
+        // Cerrar menús cuando la búsqueda está activa
         if (!searchActive) {
             setMenuActive(false);
             setUserMenuActive(false);

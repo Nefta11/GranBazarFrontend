@@ -7,6 +7,7 @@ import { FiMail, FiLock, FiEye, FiEyeOff, FiUser } from 'react-icons/fi';
 import '../../assets/styles/stylesPages/AuthStyles/Login.css';
 import { auth } from '../../services/Api';
 import { logIn } from '../../features/authSlice';
+import themeManager from '../../utils/themeManager';
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -26,6 +27,9 @@ const Login = () => {
     const authData = useSelector((state) => state.auth);
 
     useEffect(() => {
+        // Inicializar tema global
+        themeManager.initialize();
+
         // Check if user is already logged in
         const savedAuthData = localStorage.getItem('authData');
         if (savedAuthData && !authData.isAuthenticated) {

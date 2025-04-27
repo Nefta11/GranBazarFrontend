@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FiUser, FiMail, FiPhone, FiCalendar, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import '../../assets/styles/stylesPages/AuthStyles/Register.css';
 import { register } from '../../services/Api';
 import { format } from 'date-fns';
+import themeManager from '../../utils/themeManager';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -33,6 +34,11 @@ const Register = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        // Inicializar tema global
+        themeManager.initialize();
+    }, []);
 
     const validateEmail = (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
