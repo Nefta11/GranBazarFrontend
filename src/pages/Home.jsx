@@ -6,9 +6,9 @@ import logoGranBazar from '../assets/images/Gran-Bazar-removebg-preview (2).png'
 import MenuDesktop from '../components/MenuDesktop';
 import MenuMobile from '../components/MenuMobile';
 import Footer from '../components/Footer';
-import { FaGift, FaFire, FaStar, FaThumbsUp, FaSpinner, FaSearch } from 'react-icons/fa';
-import ProductCard from '../components/ProductCard';
+import { FaFire, FaStar, } from 'react-icons/fa';
 import { getAllProducts } from '../services/Api';
+import ProductSection from '../components/ProductSection';
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -66,16 +66,6 @@ const Home = () => {
         }
     };
 
-    const sectionVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 0.6
-            }
-        }
-    };
 
     // Filtrar productos
     const filterProducts = () => {
@@ -142,84 +132,23 @@ const Home = () => {
                 ) : (
                     <>
                         {featuredProducts.length > 0 && (
-                            <motion.section className="featured-section" variants={sectionVariants}>
-                                <div className="section-header">
-                                    <FaStar className="section-icon" />
-                                    <h2 className="title-section">Productos Destacados</h2>
-                                </div>
-                                <div className="section featured-grid">
-                                    {featuredProducts.map((product) => (
-                                        <ProductCard
-                                            key={`featured-${product.id}`}
-                                            id={product.id}
-                                            name={product.name}
-                                            description={product.description}
-                                            price={parseFloat(product.price)}
-                                            stock={product.stock}
-                                            category_id={product.category_id}
-                                            image={product.image}
-                                            status={product.status}
-                                            rating={parseFloat(product.rating)}
-                                        />
-                                    ))}
-                                </div>
-                            </motion.section>
+                            <ProductSection
+                                title="Productos Destacados"
+                                icon={<FaStar className="section-icon" />}
+                                products={featuredProducts}
+                            />
                         )}
 
-                        <motion.section className="category-section" variants={sectionVariants}>
-                            <div className="section-header">
-                                <FaFire className="section-icon" />
-                                <h2 className="title-section">Todos los Productos</h2>
-                            </div>
-
-                            <div className="filters-section">
-                                <div className="search-container">
-                                    <FaSearch className="search-icon" />
-                                    <input
-                                        type="text"
-                                        placeholder="Buscar productos..."
-                                        className="search-input"
-                                        value={searchTerm}
-                                        onChange={(e) => setSearchTerm(e.target.value)}
-                                    />
-                                </div>
-
-                                <div className="categories-filter">
-                                    {categories.map(category => (
-                                        <button
-                                            key={category.id}
-                                            className={`category-button ${activeCategory === category.id ? 'active' : ''}`}
-                                            onClick={() => setActiveCategory(category.id)}
-                                        >
-                                            {category.name}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {filteredProducts.length === 0 ? (
-                                <div className="no-products">
-                                    No se encontraron productos que coincidan con tu búsqueda.
-                                </div>
-                            ) : (
-                                <div className="section">
-                                    {filteredProducts.map((product) => (
-                                        <ProductCard
-                                            key={product.id}
-                                            id={product.id}
-                                            name={product.name}
-                                            description={product.description}
-                                            price={parseFloat(product.price)}
-                                            stock={product.stock}
-                                            category_id={product.category_id}
-                                            image={product.image}
-                                            status={product.status}
-                                            rating={parseFloat(product.rating)}
-                                        />
-                                    ))}
-                                </div>
-                            )}
-                        </motion.section>
+                        <ProductSection
+                            title="Todos los Productos"
+                            icon={<FaFire className="section-icon" />}
+                            products={filteredProducts}
+                            searchTerm={searchTerm}
+                            setSearchTerm={setSearchTerm}
+                            categories={categories}
+                            activeCategory={activeCategory}
+                            setActiveCategory={setActiveCategory}
+                        />
                     </>
                 )}
             </motion.main>
