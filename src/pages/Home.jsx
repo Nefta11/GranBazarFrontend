@@ -17,7 +17,7 @@ const Home = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
-    const [activeCategory, setActiveCategory] = useState(0); // 0 significa todas las categorías
+    const [activeCategory, setActiveCategory] = useState(0); 
 
     useEffect(() => {
         console.log("Datos guardados en Redux:", authData);
